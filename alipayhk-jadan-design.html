@@ -2005,126 +2005,385 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
 <!-- ━━━━━━ FRAME JA: 阿夾 AI ARCHITECTURE ━━━━━━ -->
 <div id="frame-ja" class="anchor" style="margin-bottom:48px">
 <div class="comp-section" style="margin-bottom:0">
-  <h3 style="font-size:18px;font-weight:800;margin-bottom:4px">JA · 阿夾 AI Architecture</h3>
-  <p style="font-size:13px;color:#777777;margin-bottom:24px">The ML pipeline underneath — from raw signals to the behaviours judges see in the UI</p>
 
-  <!-- 3-column pipeline -->
-  <div style="display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;gap:0;align-items:start">
-
-    <!-- ── COL A: INPUTS ── -->
-    <div>
-      <div style="font-size:11px;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;text-align:center">① Input Signals</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#333333;margin-bottom:3px">💳 Transaction Stream</div>
-          <div style="font-size:10px;color:#777777;line-height:1.5">AlipayHK 付款事件 · 商戶類別碼 · 金額 · 時間戳</div>
-        </div>
-        <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#333333;margin-bottom:3px">📍 Context Signals</div>
-          <div style="font-size:10px;color:#777777;line-height:1.5">地點接近度 · 時間段 (飯市/宵夜) · 曆期 (月尾)</div>
-        </div>
-        <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#333333;margin-bottom:3px">👥 Group Graph</div>
-          <div style="font-size:10px;color:#777777;line-height:1.5">Group 成員關係 · 過往夾單頻率 · 誰常付錢</div>
-        </div>
-        <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#333333;margin-bottom:3px">🎤 Natural Language</div>
-          <div style="font-size:10px;color:#777777;line-height:1.5">語音轉文字 (廣東話) · 結構化意圖抽取 · 模糊指代解析</div>
-        </div>
-        <div style="background:#F8FAFC;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#333333;margin-bottom:3px">📷 OCR / Vision</div>
-          <div style="font-size:10px;color:#777777;line-height:1.5">收據掃描 · 品項識別 · 不確定度評分 · 繁簡中文</div>
-        </div>
+  <!-- ── HEADER + STAT STRIP ── -->
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--c-border);flex-wrap:wrap">
+    <div style="min-width:240px">
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:4px">JA · 阿夾 AI Architecture</h3>
+      <p style="font-size:13px;color:#777777;line-height:1.55">6 specialised models · on-device privacy boundary · &lt;200ms agent response · learns from every confirmation</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="background:#F0ECFF;border:1px solid #B8AFFF;border-radius:8px;padding:6px 12px;text-align:center;min-width:84px">
+        <div style="font-size:18px;font-weight:800;color:#5A45D9;line-height:1;font-variant-numeric:tabular-nums">6</div>
+        <div style="font-size:9px;color:#5A45D9;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px">ML Models</div>
       </div>
-    </div>
-
-    <!-- arrow 1 -->
-    <div style="display:flex;align-items:center;justify-content:center;padding-top:120px">
-      <svg width="32" height="18" viewBox="0 0 32 18" fill="none"><path d="M2 9h22M18 3l8 6-8 6" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-
-    <!-- ── COL B: AI COMPONENTS ── -->
-    <div>
-      <div style="font-size:11px;font-weight:700;color:#765BFF;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;text-align:center">② AI Components</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div style="background:#F0ECFF;border:1.5px solid #B8AFFF;border-radius:10px;padding:10px 12px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <div style="width:16px;height:16px;background:#765BFF;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700">LM</div>
-            <div style="font-size:11px;font-weight:700;color:#5A45D9">Cantonese-tuned LLM</div>
-          </div>
-          <div style="font-size:10px;color:#5A45D9;line-height:1.5">廣東話意圖理解 · 對話式分單 · 爭執調解語氣生成</div>
-        </div>
-        <div style="background:#F0ECFF;border:1.5px solid #B8AFFF;border-radius:10px;padding:10px 12px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <div style="width:16px;height:16px;background:#765BFF;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700">Seq</div>
-            <div style="font-size:11px;font-weight:700;color:#5A45D9">Transaction Seq Model</div>
-          </div>
-          <div style="font-size:10px;color:#5A45D9;line-height:1.5">LSTM on payment history · 預測下一次 group 消費 · 觸發主動推斷</div>
-        </div>
-        <div style="background:#F0ECFF;border:1.5px solid #B8AFFF;border-radius:10px;padding:10px 12px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <div style="width:16px;height:16px;background:#765BFF;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700">Mem</div>
-            <div style="font-size:11px;font-weight:700;color:#5A45D9">Preference Memory</div>
-          </div>
-          <div style="font-size:10px;color:#5A45D9;line-height:1.5">每個 member 的飲食限制 · 慣常付款習慣 · 歷史公平度向量</div>
-        </div>
-        <div style="background:#F0ECFF;border:1.5px solid #B8AFFF;border-radius:10px;padding:10px 12px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <div style="width:16px;height:16px;background:#765BFF;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700">AD</div>
-            <div style="font-size:11px;font-weight:700;color:#5A45D9">Anomaly Detector</div>
-          </div>
-          <div style="font-size:10px;color:#5A45D9;line-height:1.5">偵測異常金額 / 群組外成員 · 保護 AlipayHK 支付安全</div>
-        </div>
-        <div style="background:#F0ECFF;border:1.5px solid #B8AFFF;border-radius:10px;padding:10px 12px">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <div style="width:16px;height:16px;background:#765BFF;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:700">Grf</div>
-            <div style="font-size:11px;font-weight:700;color:#5A45D9">Debt Simplification Graph</div>
-          </div>
-          <div style="font-size:10px;color:#5A45D9;line-height:1.5">Min-cost flow · 將 n(n-1) 筆債化為最少轉帳 · B3 核心</div>
-        </div>
+      <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:8px;padding:6px 12px;text-align:center;min-width:84px">
+        <div style="font-size:18px;font-weight:800;color:#065F46;line-height:1;font-variant-numeric:tabular-nums">&lt;200ms</div>
+        <div style="font-size:9px;color:#065F46;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px">P99 Round-Trip</div>
       </div>
-    </div>
-
-    <!-- arrow 2 -->
-    <div style="display:flex;align-items:center;justify-content:center;padding-top:120px">
-      <svg width="32" height="18" viewBox="0 0 32 18" fill="none"><path d="M2 9h22M18 3l8 6-8 6" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-
-    <!-- ── COL C: OUTPUT BEHAVIOURS ── -->
-    <div>
-      <div style="font-size:11px;font-weight:700;color:#03C567;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;text-align:center">③ Output Behaviours</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:3px">J4 · Proactive Nudge</div>
-          <div style="font-size:10px;color:#047857;line-height:1.5">Transaction Seq 偵測到你哋同一地點畀錢 → 主動問 "要夾單？"</div>
-        </div>
-        <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:3px">J2 · Conversational Split</div>
-          <div style="font-size:10px;color:#047857;line-height:1.5">LLM + Preference Memory → 「Karen 食素扣返 $75，攤分畀其他 3 人各 +$25」</div>
-        </div>
-        <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:3px">J3 · Fairness Audit</div>
-          <div style="font-size:10px;color:#047857;line-height:1.5">Preference Memory 累積 14 餐 → 生成每人食咗幾錢 vs 畀咗幾錢的有號差</div>
-        </div>
-        <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:3px">J5 · Mediation Draft</div>
-          <div style="font-size:10px;color:#047857;line-height:1.5">LLM (廣東話語氣) + 歷史標準 → 起草調解方案，等待 3 人共識確認</div>
-        </div>
-        <div style="background:#F0FDF4;border:1px solid #A7F3D0;border-radius:10px;padding:10px 12px">
-          <div style="font-size:11px;font-weight:700;color:#065F46;margin-bottom:3px">B3 · Debt Simplification</div>
-          <div style="font-size:10px;color:#047857;line-height:1.5">Graph algorithm → 4 人 6 筆債 → 最少 2 次轉帳結清</div>
-        </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:6px 12px;text-align:center;min-width:84px">
+        <div style="font-size:18px;font-weight:800;color:#92400E;line-height:1;font-variant-numeric:tabular-nums">100%</div>
+        <div style="font-size:9px;color:#92400E;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px">HITL Confirm</div>
+      </div>
+      <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:6px 12px;text-align:center;min-width:84px">
+        <div style="font-size:18px;font-weight:800;color:#1E3A8A;line-height:1;font-variant-numeric:tabular-nums">0</div>
+        <div style="font-size:9px;color:#1E3A8A;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:2px">Auto-Transfer</div>
       </div>
     </div>
   </div>
 
-  <!-- Privacy + guardrails footnote -->
-  <div style="margin-top:20px;padding:12px 16px;background:#FFFBEB;border-radius:10px;border:1px solid #FDE68A;display:flex;align-items:flex-start;gap:10px">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    <div style="font-size:11px;color:#92400E;line-height:1.65">
-      <b>Privacy &amp; guardrails:</b> Preference Memory 係 on-device + encrypted at rest，只喺 group 內部共享。Anomaly Detector 偵測異常後只提示用戶，唔會自動凍結。LLM 輸出必須用戶確認先生效 — 阿夾 唔會單方面改動任何數字或發送任何訊息。
+  <!-- ═════════ SECTION A · SYSTEM LAYER STACK ═════════ -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">A · System Layer Stack</div>
+
+    <!-- Layer 0: User Surfaces -->
+    <div style="background:#FAFAFA;border:1px solid #E5E7EB;border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:16px">
+      <div style="min-width:120px">
+        <div style="font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:.08em">LAYER 0</div>
+        <div style="font-size:13px;font-weight:700;color:#333">User Surfaces</div>
+        <div style="font-size:10px;color:#9CA3AF;margin-top:1px">React Native · TS</div>
+      </div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">J2 Voice Split</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">J4 Proactive Card</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">J3 Fairness Audit</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">J5 Mediation</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">B3 Settle</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #DDDDDD;border-radius:6px;padding:4px 10px;color:#333">A1 Payment Success</span>
+      </div>
+    </div>
+
+    <!-- arrow between layers -->
+    <div style="display:flex;justify-content:center;gap:32px;padding:2px 0;font-size:10px;color:#9CA3AF;font-weight:600">
+      <span>↓ intent / event</span><span style="color:#DDDDDD">·</span><span>↑ response / HITL</span>
+    </div>
+
+    <!-- Layer 1: Orchestration -->
+    <div style="background:#F0ECFF;border:1px solid #C5B5FF;border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:16px">
+      <div style="min-width:120px">
+        <div style="font-size:10px;font-weight:700;color:#9580FF;letter-spacing:.08em">LAYER 1</div>
+        <div style="font-size:13px;font-weight:700;color:#5A45D9">Agent Orchestration</div>
+        <div style="font-size:10px;color:#9580FF;margin-top:1px">Python · async</div>
+      </div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #C5B5FF;border-radius:6px;padding:4px 10px;color:#5A45D9">Intent Router</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #C5B5FF;border-radius:6px;padding:4px 10px;color:#5A45D9">Confidence Gate</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #C5B5FF;border-radius:6px;padding:4px 10px;color:#5A45D9">HITL Confirmation</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #C5B5FF;border-radius:6px;padding:4px 10px;color:#5A45D9">Event Scheduler</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #C5B5FF;border-radius:6px;padding:4px 10px;color:#5A45D9">Tool Registry</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:32px;padding:2px 0;font-size:10px;color:#9CA3AF;font-weight:600">
+      <span>↓ inference request</span><span style="color:#DDDDDD">·</span><span>↑ model output + confidence</span>
+    </div>
+
+    <!-- Layer 2: ML Model Bank (highlighted) -->
+    <div style="background:linear-gradient(135deg,#765BFF 0%,#5A45D9 100%);color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:8px;box-shadow:0 4px 12px rgba(118,91,255,.25)">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">
+        <div style="min-width:120px">
+          <div style="font-size:10px;font-weight:700;opacity:.7;letter-spacing:.08em">LAYER 2</div>
+          <div style="font-size:13px;font-weight:800">ML Model Bank</div>
+          <div style="font-size:10px;opacity:.7;margin-top:1px">Triton + PyTorch</div>
+        </div>
+        <div style="flex:1;font-size:10px;opacity:.85;line-height:1.5">6 specialised models running in parallel — full deep-dive ↓</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px">
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">① Cantonese LLM 7B</span>
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">② Seq Model · LSTM</span>
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">③ OCR + ViT-B/16</span>
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">④ Preference Memory</span>
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">⑤ Anomaly Detector</span>
+        <span style="font-size:10.5px;font-weight:700;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 8px;backdrop-filter:blur(4px)">⑥ Debt Graph Solver</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:32px;padding:2px 0;font-size:10px;color:#9CA3AF;font-weight:600">
+      <span>↓ inference</span><span style="color:#DDDDDD">·</span><span>↑ trace + audit</span>
+    </div>
+
+    <!-- Layer 3: Trust / Safety / Privacy -->
+    <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:16px">
+      <div style="min-width:120px">
+        <div style="font-size:10px;font-weight:700;color:#D97706;letter-spacing:.08em">LAYER 3</div>
+        <div style="font-size:13px;font-weight:700;color:#92400E">Trust · Safety · Privacy</div>
+        <div style="font-size:10px;color:#D97706;margin-top:1px">always-on plane</div>
+      </div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">PII Redactor</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">Consent Check</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">Audit Log (WORM)</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">Rate Limiter</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">Drift Monitor</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #FDE68A;border-radius:6px;padding:4px 10px;color:#92400E">Cantonese Tone Guard</span>
+      </div>
+    </div>
+
+    <!-- ── PRIVACY BOUNDARY ── -->
+    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;margin:6px 0">
+      <div style="flex:1;height:0;border-top:2px dashed #D97706"></div>
+      <span style="font-size:10px;font-weight:800;color:#D97706;letter-spacing:.12em;text-transform:uppercase;background:#FFFBEB;padding:4px 10px;border-radius:14px;border:1px solid #FDE68A">🔒 On-Device / Server Boundary</span>
+      <div style="flex:1;height:0;border-top:2px dashed #D97706"></div>
+    </div>
+
+    <!-- Layer 4: Data / Feature Plane -->
+    <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:16px">
+      <div style="min-width:120px">
+        <div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:.08em">LAYER 4</div>
+        <div style="font-size:13px;font-weight:700;color:#1E3A8A">Feature &amp; Data Plane</div>
+        <div style="font-size:10px;color:#3B82F6;margin-top:1px">Kafka · Neo4j · pgvec</div>
+      </div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #BFDBFE;border-radius:6px;padding:4px 10px;color:#1E3A8A">Payment Stream (Kafka)</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #BFDBFE;border-radius:6px;padding:4px 10px;color:#1E3A8A">Group Graph (Neo4j)</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #BFDBFE;border-radius:6px;padding:4px 10px;color:#1E3A8A">Pref Vectors (pgvector)</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #BFDBFE;border-radius:6px;padding:4px 10px;color:#1E3A8A">Embeddings Cache (Redis)</span>
+        <span style="font-size:10.5px;font-weight:600;background:#fff;border:1px solid #BFDBFE;border-radius:6px;padding:4px 10px;color:#1E3A8A">Receipt Object Store</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;padding:2px 0;font-size:10px;color:#9CA3AF;font-weight:600">
+      <span>↓ existing AlipayHK service contracts</span>
+    </div>
+
+    <!-- Layer 5: AlipayHK Foundation -->
+    <div style="background:#1E293B;color:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:16px">
+      <div style="min-width:120px">
+        <div style="font-size:10px;font-weight:700;opacity:.6;letter-spacing:.08em">LAYER 5</div>
+        <div style="font-size:13px;font-weight:700">AlipayHK Foundation</div>
+        <div style="font-size:10px;opacity:.6;margin-top:1px">existing infra</div>
+      </div>
+      <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+        <span style="font-size:10.5px;font-weight:600;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:#fff">Identity &amp; Auth</span>
+        <span style="font-size:10.5px;font-weight:600;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:#fff">Wallet Service</span>
+        <span style="font-size:10.5px;font-weight:600;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:#fff">Payment Engine</span>
+        <span style="font-size:10.5px;font-weight:600;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:#fff">Risk Engine</span>
+        <span style="font-size:10.5px;font-weight:600;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:#fff">A.Point Rewards</span>
+      </div>
     </div>
   </div>
+
+  <!-- ═════════ SECTION B · ML MODEL DEEP-DIVE ═════════ -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">B · ML Model Bank — Deep Dive</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">
+
+      <!-- Model 1: Cantonese LLM -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">①</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">Cantonese ASR + LLM</div>
+            <div style="font-size:10px;color:#9CA3AF">Yue-Chinese 7B · LoRA fine-tune</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">PARAMS</span><span style="color:#333;font-variant-numeric:tabular-nums">7.0B base · 18M adapter</span>
+          <span style="color:#9CA3AF;font-weight:600">LATENCY</span><span style="color:#333;font-variant-numeric:tabular-nums">p50 320ms · p99 850ms</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">24kHz voice → text</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">Structured intent JSON</span>
+          <span style="color:#9CA3AF;font-weight:600">TRAIN</span><span style="color:#333">10k 廣東話小時 + 500 收據</span>
+          <span style="color:#9CA3AF;font-weight:600">EVAL</span><span style="color:#03C567;font-weight:700">Intent F1 0.91 · WER 8.3%</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">J2 · J5</span>
+        </div>
+      </div>
+
+      <!-- Model 2: Transaction Seq -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">②</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">Transaction Sequence</div>
+            <div style="font-size:10px;color:#9CA3AF">Bi-LSTM · co-payment predictor</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">PARAMS</span><span style="color:#333;font-variant-numeric:tabular-nums">2.4M · 256-d embedding</span>
+          <span style="color:#9CA3AF;font-weight:600">LATENCY</span><span style="color:#333;font-variant-numeric:tabular-nums">p50 12ms · p99 38ms</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">Last 30 days payment events</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">P(group expense) per merchant</span>
+          <span style="color:#9CA3AF;font-weight:600">TRAIN</span><span style="color:#333">Anon. group payment pairs</span>
+          <span style="color:#9CA3AF;font-weight:600">EVAL</span><span style="color:#03C567;font-weight:700">ROC-AUC 0.88 @ threshold 0.7</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">J4 · J0 nudges</span>
+        </div>
+      </div>
+
+      <!-- Model 3: OCR/Vision -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">③</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">OCR + Vision Parser</div>
+            <div style="font-size:10px;color:#9CA3AF">ViT-B/16 + line-item decoder</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">PARAMS</span><span style="color:#333;font-variant-numeric:tabular-nums">86M vision + 12M decoder</span>
+          <span style="color:#9CA3AF;font-weight:600">LATENCY</span><span style="color:#333;font-variant-numeric:tabular-nums">p50 480ms · p99 1.2s</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">Receipt JPG (≤4MP)</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">Items[] + conf · totals</span>
+          <span style="color:#9CA3AF;font-weight:600">TRAIN</span><span style="color:#333">繁簡中英文混合 8.4k 收據</span>
+          <span style="color:#9CA3AF;font-weight:600">EVAL</span><span style="color:#03C567;font-weight:700">Item-level F1 0.94</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">A3 · A4 · A5 · E1</span>
+        </div>
+      </div>
+
+      <!-- Model 4: Preference Memory -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">④</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">Preference Memory</div>
+            <div style="font-size:10px;color:#9CA3AF">Per-group vector store + rules</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">STORE</span><span style="color:#333;font-variant-numeric:tabular-nums">pgvector · 768-d per member</span>
+          <span style="color:#9CA3AF;font-weight:600">LATENCY</span><span style="color:#333;font-variant-numeric:tabular-nums">p50 4ms · p99 14ms (ANN)</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">Group + member ID</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">Diet · pay habits · fairness vec</span>
+          <span style="color:#9CA3AF;font-weight:600">WRITE</span><span style="color:#333">Every confirmed split (HITL)</span>
+          <span style="color:#9CA3AF;font-weight:600">PRIVACY</span><span style="color:#D97706;font-weight:700">Encrypted at rest · group-scoped</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">J2 · J3 · J4 · J5</span>
+        </div>
+      </div>
+
+      <!-- Model 5: Anomaly Detector -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">⑤</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">Anomaly Detector</div>
+            <div style="font-size:10px;color:#9CA3AF">Isolation forest + rule overlay</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">MODEL</span><span style="color:#333;font-variant-numeric:tabular-nums">512-tree iForest · 64-d feature</span>
+          <span style="color:#9CA3AF;font-weight:600">LATENCY</span><span style="color:#333;font-variant-numeric:tabular-nums">p50 8ms · p99 22ms</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">Proposed split + group history</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">Anomaly score 0–1 · reasons[]</span>
+          <span style="color:#9CA3AF;font-weight:600">TRIGGERS</span><span style="color:#333">Outsider · 10× avg · velocity</span>
+          <span style="color:#9CA3AF;font-weight:600">ACTION</span><span style="color:#D97706;font-weight:700">Notify only · never auto-freeze</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">E3 · E5 · B3</span>
+        </div>
+      </div>
+
+      <!-- Model 6: Debt Graph -->
+      <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:12px;padding:14px;box-shadow:0 1px 3px rgba(118,91,255,.08)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px dashed #ECE7FF">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#9580FF,#5A45D9);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px">⑥</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:800;color:#333">Debt Simplification</div>
+            <div style="font-size:10px;color:#9CA3AF">Min-cost flow on net graph</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:10.5px">
+          <span style="color:#9CA3AF;font-weight:600">ALGO</span><span style="color:#333">Net-balance + greedy match</span>
+          <span style="color:#9CA3AF;font-weight:600">COMPLEXITY</span><span style="color:#333;font-variant-numeric:tabular-nums">O(n log n) · solved &lt;5ms @ n=20</span>
+          <span style="color:#9CA3AF;font-weight:600">INPUT</span><span style="color:#333">Pairwise debt matrix</span>
+          <span style="color:#9CA3AF;font-weight:600">OUTPUT</span><span style="color:#333">≤ n−1 transfers · provably min</span>
+          <span style="color:#9CA3AF;font-weight:600">EXAMPLE</span><span style="color:#333">4 ppl · 6 debts → 2 transfers</span>
+          <span style="color:#9CA3AF;font-weight:600">DETERMINISTIC</span><span style="color:#03C567;font-weight:700">Yes · auditable · no ML</span>
+          <span style="color:#9CA3AF;font-weight:600">USED BY</span><span style="color:#765BFF;font-weight:700">B3 settle</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═════════ SECTION C · END-TO-END SEQUENCE TRACE ═════════ -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">C · End-to-End Sequence Trace</div>
+    <div style="font-size:11px;color:#9CA3AF;margin-bottom:14px">One real request: user says "夾單，海皇粥店 $920，我食咗炒飯仲有杯凍奶茶，其他平均分" — trace each step</div>
+    <div style="background:#0F172A;color:#E2E8F0;border-radius:12px;padding:18px 20px;font-family:'SF Mono','Monaco',monospace;font-size:11.5px;line-height:1.85;overflow-x:auto">
+      <div><span style="color:#94A3B8">T+0ms</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#A78BFA;font-weight:700">USER</span>&nbsp;&nbsp;<span style="color:#fff">voice 2.1s → upload</span></div>
+      <div><span style="color:#94A3B8">T+48ms</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#FBBF24">L3</span>&nbsp;&nbsp;&nbsp;&nbsp;PII redactor strips numerics → tag <span style="color:#34D399">audit:req_8f3a</span></div>
+      <div><span style="color:#94A3B8">T+52ms</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#A78BFA">L1</span>&nbsp;&nbsp;&nbsp;&nbsp;Intent Router → <span style="color:#34D399">split_request</span> (conf 0.97)</div>
+      <div><span style="color:#94A3B8">T+85ms</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F472B6">M1</span>&nbsp;&nbsp;&nbsp;&nbsp;Cantonese LLM → intent JSON · 4 ppl · items[炒飯,凍奶茶]</div>
+      <div><span style="color:#94A3B8">T+92ms</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#60A5FA">L4</span>&nbsp;&nbsp;&nbsp;&nbsp;Group Graph lookup → 飯腳 [Karen, 阿明, 阿May, 你]</div>
+      <div><span style="color:#94A3B8">T+96ms</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F472B6">M4</span>&nbsp;&nbsp;&nbsp;&nbsp;Preference Memory recall → Karen={vegetarian:0.93}</div>
+      <div><span style="color:#94A3B8">T+128ms</span>&nbsp;&nbsp;&nbsp;<span style="color:#F472B6">M6</span>&nbsp;&nbsp;&nbsp;&nbsp;Item-aware split: you=$323 · Karen=$133 · 明=$232 · May=$232</div>
+      <div><span style="color:#94A3B8">T+135ms</span>&nbsp;&nbsp;&nbsp;<span style="color:#F472B6">M5</span>&nbsp;&nbsp;&nbsp;&nbsp;Anomaly check → score 0.04 ✓ (well within group history)</div>
+      <div><span style="color:#94A3B8">T+142ms</span>&nbsp;&nbsp;&nbsp;<span style="color:#A78BFA">L1</span>&nbsp;&nbsp;&nbsp;&nbsp;Confidence gate → 0.94 ≥ 0.80 ✓ render to user</div>
+      <div><span style="color:#94A3B8">T+148ms</span>&nbsp;&nbsp;&nbsp;<span style="color:#FBBF24">L3</span>&nbsp;&nbsp;&nbsp;&nbsp;Audit log write → req_8f3a · all 7 model calls signed</div>
+      <div><span style="color:#94A3B8">T+162ms</span>&nbsp;&nbsp;&nbsp;<span style="color:#A78BFA;font-weight:700">UI</span>&nbsp;&nbsp;&nbsp;&nbsp;Render J2 bubble + 「確認 · 發送」 HITL button</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #334155"><span style="color:#94A3B8">⋯⋯⋯</span>&nbsp;&nbsp;<span style="color:#94A3B8;font-style:italic">user reads, taps 確認</span></div>
+      <div><span style="color:#94A3B8">T+3.4s</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#A78BFA;font-weight:700">USER</span>&nbsp;&nbsp;tap confirm</div>
+      <div><span style="color:#94A3B8">T+3.5s</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#60A5FA">L5</span>&nbsp;&nbsp;&nbsp;&nbsp;AlipayHK Payment Engine → send 3 收款請求</div>
+      <div><span style="color:#94A3B8">T+3.6s</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F472B6">M4</span>&nbsp;&nbsp;&nbsp;&nbsp;Preference Memory write ← this split labeled "user-approved"</div>
+      <div style="margin-top:10px;padding:6px 10px;background:rgba(52,211,153,.15);border-left:2px solid #34D399;border-radius:0 4px 4px 0;font-family:inherit"><span style="color:#34D399;font-weight:700">✓ DONE</span>&nbsp;&nbsp;<span style="color:#E2E8F0">agent path 162ms · user→done 3.6s · 1 voice → 3 payment requests</span></div>
+    </div>
+  </div>
+
+  <!-- ═════════ SECTION D · CONTINUOUS LEARNING LOOP ═════════ -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">D · Continuous Learning Loop</div>
+    <div style="background:#FAFAFA;border:1px solid #E5E7EB;border-radius:12px;padding:18px;position:relative">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch">
+        <!-- Node 1 -->
+        <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:10px;padding:12px;position:relative">
+          <div style="font-size:9px;font-weight:700;color:#9580FF;letter-spacing:.08em;margin-bottom:4px">STEP 1</div>
+          <div style="font-size:12px;font-weight:700;color:#5A45D9;margin-bottom:4px">User confirms split</div>
+          <div style="font-size:10px;color:#777;line-height:1.5">HITL tap on J2 / B3 → implicit positive label</div>
+        </div>
+        <!-- Node 2 -->
+        <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:10px;padding:12px">
+          <div style="font-size:9px;font-weight:700;color:#9580FF;letter-spacing:.08em;margin-bottom:4px">STEP 2</div>
+          <div style="font-size:12px;font-weight:700;color:#5A45D9;margin-bottom:4px">Preference Mem update</div>
+          <div style="font-size:10px;color:#777;line-height:1.5">Karen vegetarian vector reinforced · 你 specific-items habit logged</div>
+        </div>
+        <!-- Node 3 -->
+        <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:10px;padding:12px">
+          <div style="font-size:9px;font-weight:700;color:#9580FF;letter-spacing:.08em;margin-bottom:4px">STEP 3</div>
+          <div style="font-size:12px;font-weight:700;color:#5A45D9;margin-bottom:4px">Drift monitor compares</div>
+          <div style="font-size:10px;color:#777;line-height:1.5">Eval set check every 24h · auto-rollback if F1 drops &gt; 3%</div>
+        </div>
+        <!-- Node 4 -->
+        <div style="background:#fff;border:1.5px solid #C5B5FF;border-radius:10px;padding:12px">
+          <div style="font-size:9px;font-weight:700;color:#9580FF;letter-spacing:.08em;margin-bottom:4px">STEP 4</div>
+          <div style="font-size:12px;font-weight:700;color:#5A45D9;margin-bottom:4px">Weekly fine-tune</div>
+          <div style="font-size:10px;color:#777;line-height:1.5">Anonymised confirmation pairs → LoRA adapter refresh on staging</div>
+        </div>
+      </div>
+      <!-- loop-back arrow -->
+      <div style="margin-top:14px;padding:8px 14px;background:#fff;border:1px dashed #B8AFFF;border-radius:8px;display:flex;align-items:center;gap:10px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-30deg)"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+        <div style="font-size:11px;color:#5A45D9;line-height:1.5"><b>Loop back to STEP 1</b> — every confirmed split feeds the next inference. Models get better at this specific group every week — that's how 阿夾 actually "knows you."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════ SECTION E · TRUST · SAFETY · COMPLIANCE ═════════ -->
+  <div>
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">E · Trust · Safety · Compliance</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">🔒 On-Device Privacy</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">PII redacted before leaving phone. Voice never persisted server-side. Preference vectors encrypted with group-scoped key.</div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">✋ Human-in-the-Loop</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">100% of money-moving actions require explicit user tap. 阿夾 never auto-transfers, never auto-splits, never auto-messages.</div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">📋 Auditable Log</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">Every model call signed + stored WORM 7 yrs. User can request "explain this split" → full causal trace.</div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">⚖️ Consent &amp; Consensus</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">Mediation drafts (J5) need 3-person agreement to commit. Fairness audit (J3) is private — only you see it.</div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">🚦 Anomaly = Notify Only</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">Anomaly detector never freezes wallets. Worst case: 阿夾 asks "this 10× normal — sure?" User keeps control.</div>
+      </div>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:12px">
+        <div style="font-size:11px;font-weight:800;color:#92400E;margin-bottom:4px;display:flex;align-items:center;gap:5px">🔄 Reversible Within 24h</div>
+        <div style="font-size:10.5px;color:#78350F;line-height:1.55">Any 阿夾-suggested action can be undone with one tap for 24h (see E5 Recovery). Models learn from undos too.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </div>
 
