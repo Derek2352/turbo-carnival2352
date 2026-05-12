@@ -124,6 +124,27 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
 
 /* dark mode tokens for E4 */
 .dm-bg{background:#1A1A1A}.dm-surf{background:#2C2C2E}.dm-bord{border-color:#3A3A3C !important}.dm-t1{color:#FFF}.dm-t2{color:rgba(235,235,245,.6)}.dm-t3{color:rgba(235,235,245,.3)}
+
+/* ════════ AlipayHK app aesthetic ════════ */
+.ap-hero{background:linear-gradient(135deg,#E8E0FF 0%,#D4C5FF 55%,#C5B5FF 100%);border-radius:18px;padding:16px 18px;position:relative;overflow:hidden;color:#333333}
+.ap-hero-dark{background:linear-gradient(135deg,#8B7AFF 0%,#765BFF 60%,#5A45D9 100%);color:#fff}
+.ap-corner{position:absolute;top:0;right:0;background:linear-gradient(135deg,#FFD980 0%,#FFB347 100%);color:#5A3010;font-size:9px;font-weight:700;padding:4px 10px 4px 14px;border-radius:0 18px 0 14px;letter-spacing:.04em;display:flex;align-items:center;gap:3px;box-shadow:0 2px 6px rgba(255,153,0,.25)}
+.ap-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-radius:20px;padding:8px 14px;font-size:13px;color:#777777;border:1px solid rgba(255,255,255,.8)}
+.ap-pills{display:inline-flex;align-items:center;background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border-radius:18px;padding:3px;gap:2px}
+.ap-pill{padding:6px 14px;border-radius:16px;font-size:12px;color:#5A3F8F;font-weight:500;cursor:pointer;transition:all .15s}
+.ap-pill.on{background:#fff;color:#765BFF;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ap-icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 4px}
+.ap-icon-cell{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.ap-icon-wrap{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.ap-icon-lbl{font-size:10px;color:#333333;text-align:center;font-weight:500}
+.ap-tabnav{position:absolute;bottom:0;left:0;right:0;height:62px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:flex-start;padding:6px 0 0;z-index:3}
+.ap-tabnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#777777;cursor:pointer}
+.ap-tabnav-item.on{color:#765BFF}
+.ap-tabnav-fab{flex:1;display:flex;justify-content:center;position:relative;margin-top:-18px}
+.ap-tabnav-fab-btn{width:50px;height:50px;background:linear-gradient(135deg,#9580FF 0%,#765BFF 60%,#5A45D9 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px rgba(118,91,255,.45),inset 0 1px 0 rgba(255,255,255,.3)}
+.ap-tabnav-fab-lbl{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:10px;color:#333333;font-weight:600;white-space:nowrap}
+.ap-card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ap-brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#9580FF,#765BFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
@@ -387,22 +408,27 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
             </div>
           </div>
 
-          <!-- NEW: action chips section -->
-          <div style="margin-top:24px;padding:14px;background:#F0F7FF;border-radius:12px;border:1px dashed #B8AFFF;position:relative">
-            <div style="position:absolute;top:-9px;left:14px;background:#765BFF;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px">NEW</div>
-            <div style="font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round"><path d="M7 1v12M1 7h12"/></svg>
-              想分擔呢筆數？
+          <!-- NEW: AI split prompt (AlipayHK lavender hero style) -->
+          <div class="ap-hero" style="margin-top:24px;padding:14px 14px 12px">
+            <div class="ap-corner">
+              <span style="font-size:9px">✦</span>
+              <span>阿夾 主動推斷</span>
             </div>
-            <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
-              <div class="chip chip-blue" style="flex:1;justify-content:center;min-width:0;box-shadow:0 4px 12px rgba(118,91,255,.3)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16"/></svg>
-                夾單
+            <div style="display:flex;align-items:center;gap:10px">
+              <div class="av av-40 av-bot" style="flex-shrink:0;font-size:16px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:700;color:#2A1F5C">想分擔呢筆數？</div>
+                <div style="font-size:11px;color:#5A3F8F;margin-top:1px">我見飯腳 4 人都喺度 · 96% 推斷係 group</div>
               </div>
-              <div class="chip chip-out" style="flex:1;justify-content:center;min-width:0;font-size:12px">加入小組數</div>
-              <div class="chip chip-gray" style="justify-content:center;font-size:12px">收據</div>
             </div>
-            <div style="font-size:11px;color:#765BFF;text-align:center;font-weight:500;margin-top:4px">↑ 與朋友分擔此筆 (推薦)</div>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button style="flex:1;height:38px;background:linear-gradient(135deg,#9580FF,#5A45D9);color:#fff;border:none;border-radius:14px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:0 4px 12px rgba(118,91,255,.35);cursor:pointer">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16"/></svg>
+                夾單
+              </button>
+              <button style="flex:1;height:38px;background:rgba(255,255,255,.7);color:#765BFF;border:none;border-radius:14px;font-size:12px;font-weight:600;cursor:pointer">加入小組數</button>
+              <button style="height:38px;padding:0 12px;background:rgba(255,255,255,.5);color:#5A3F8F;border:none;border-radius:14px;font-size:12px;cursor:pointer">收據</button>
+            </div>
           </div>
         </div>
 
@@ -1082,54 +1108,153 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
   <p>Groups overview · group detail · AI-optimised settle-up · expense management</p>
 </div>
 <div class="grid-screens">
-<!-- ━━━━━━ FRAME B1: GROUPS OVERVIEW ━━━━━━ -->
+<!-- ━━━━━━ FRAME B1: GROUPS OVERVIEW (AlipayHK aesthetic) ━━━━━━ -->
 <div class="cell anchor" id="frame-b1">
-  <div class="meta"><span class="fid">FRAME B1</span><span class="fname">Groups Overview</span><span class="fdesc">Main entry — 後數 home</span></div>
+  <div class="meta"><span class="fid">FRAME B1</span><span class="fname">Groups Overview</span><span class="fdesc">後數 home · matches AlipayHK home aesthetic</span></div>
   <div class="ph">
-    <div class="phi" style="background:#F2F2F2">
-      <div class="nav" style="background:#F2F2F2;border-bottom:none"><div class="nav-title" style="font-size:20px;font-weight:800">後數</div><div style="position:absolute;right:16px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div></div>
+    <div class="phi" style="background:linear-gradient(180deg,#E8E0FF 0%,#F2EDFF 180px,#F2F2F2 280px)">
+
+      <!-- search bar / nav -->
+      <div style="padding:6px 16px 10px;flex-shrink:0;display:flex;align-items:center;gap:8px">
+        <div class="ap-search" style="flex:1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#777777" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+          <span style="flex:1">夾單 · 後數</span>
+        </div>
+        <div style="width:36px;height:36px;background:rgba(255,255,255,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <div style="position:absolute;top:4px;right:6px;width:7px;height:7px;background:#F81404;border-radius:50%;border:1.5px solid #fff"></div>
+        </div>
+        <div style="width:36px;height:36px;background:rgba(255,255,255,.7);border-radius:50%;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+      </div>
+
+      <!-- filter pills -->
+      <div style="padding:0 16px 12px;flex-shrink:0;display:flex;justify-content:center">
+        <div class="ap-pills">
+          <span class="ap-pill on">後數</span>
+          <span class="ap-pill">夾單記錄</span>
+          <span class="ap-pill">朋友</span>
+        </div>
+      </div>
+
       <div class="content"><div class="scroll" style="padding:0 16px 80px">
-        <!-- hero balance card -->
-        <div class="card" style="padding:18px;background:linear-gradient(135deg,#765BFF 0%,#5A45D9 100%);color:#fff;border:none;margin-bottom:14px">
-          <div style="font-size:12px;opacity:.8;font-weight:500">你嘅淨結餘</div>
-          <div class="money" style="font-size:38px;margin-top:6px;letter-spacing:-1.5px;text-shadow:0 2px 8px rgba(0,0,0,.2)">+HK$ 265</div>
-          <div style="margin-top:14px;display:flex;gap:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15)">
-            <div style="flex:1;display:flex;align-items:center;gap:6px">
-              <div style="width:8px;height:8px;border-radius:50%;background:#03C567"></div>
-              <div><div style="font-size:10px;opacity:.75">被欠</div><div class="money" style="font-size:15px">HK$ 480</div></div>
+
+        <!-- hero balance card (AlipayHK style) -->
+        <div class="ap-hero" style="margin-bottom:14px">
+          <div class="ap-corner">
+            <span style="font-size:9px">✦</span>
+            <span>阿夾 AI 後數</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#9580FF,#5A45D9);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(118,91,255,.3),inset 0 1px 0 rgba(255,255,255,.3);position:relative">
+              <span style="font-size:22px;color:#fff;font-weight:800;letter-spacing:-1px">夾</span>
             </div>
-            <div style="width:1px;background:rgba(255,255,255,.2)"></div>
-            <div style="flex:1;display:flex;align-items:center;gap:6px">
-              <div style="width:8px;height:8px;border-radius:50%;background:#FF7875"></div>
-              <div><div style="font-size:10px;opacity:.75">欠人</div><div class="money" style="font-size:15px">HK$ 215</div></div>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:#5A3F8F">你嘅淨結餘 HKD
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5A3F8F" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+              </div>
+              <div class="money" style="font-size:26px;letter-spacing:-1px;color:#2A1F5C;line-height:1.1;margin-top:2px">+HK$ 265.00</div>
+              <div style="font-size:10px;color:#5A3F8F;margin-top:1px">較上週 <span style="color:#03C567;font-weight:600">+$45</span></div>
+            </div>
+            <button style="background:#fff;color:#765BFF;border:none;border-radius:18px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)">後數</button>
+          </div>
+
+          <!-- inner mini stats -->
+          <div style="margin-top:14px;background:rgba(255,255,255,.5);border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(8px)">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;color:#5A3F8F">被欠</div>
+              <div class="money" style="font-size:14px;color:#03C567;margin-top:1px">+HK$ 480</div>
+            </div>
+            <div style="width:1px;height:24px;background:rgba(118,91,255,.18)"></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;color:#5A3F8F">欠人</div>
+              <div class="money" style="font-size:14px;color:#F81404;margin-top:1px">-HK$ 215</div>
+            </div>
+            <div style="width:1px;height:24px;background:rgba(118,91,255,.18)"></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+              <div style="font-size:10px;color:#5A3F8F">本月夾單</div>
+              <div class="money" style="font-size:14px;color:#765BFF;margin-top:1px">12 次</div>
             </div>
           </div>
         </div>
 
+        <!-- icon shortcut grid (AlipayHK style) -->
+        <div class="ap-card" style="margin-bottom:14px;padding:14px 6px">
+          <div class="ap-icon-grid">
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#FFE5CC,#FFCB8F)">🧾</div>
+              <div class="ap-icon-lbl">夾單</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#D4F1D4,#A8E8AC)">💸</div>
+              <div class="ap-icon-lbl">收款請求</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#E0DAFF,#B8AFFF)">✦</div>
+              <div class="ap-icon-lbl">同阿夾講</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#FFE0E0,#FFB8B8)">📋</div>
+              <div class="ap-icon-lbl">收據記錄</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#FFF4CC,#FFE085)">⭐</div>
+              <div class="ap-icon-lbl">公平度</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#CCE5FF,#85B8FF)">🍽️</div>
+              <div class="ap-icon-lbl">餐廳優惠</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:linear-gradient(135deg,#F0D9FF,#D4AFFF)">👥</div>
+              <div class="ap-icon-lbl">邀請朋友</div>
+            </div>
+            <div class="ap-icon-cell">
+              <div class="ap-icon-wrap" style="background:#F2F2F2">⋯</div>
+              <div class="ap-icon-lbl">查看全部</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 阿夾 promo card -->
+        <div style="background:linear-gradient(135deg,#FFE2C5 0%,#FFC785 100%);border-radius:14px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden">
+          <div style="position:absolute;right:-10px;bottom:-10px;font-size:60px;opacity:.18">✦</div>
+          <div class="av av-40 av-bot" style="flex-shrink:0;font-size:18px;position:relative;z-index:1"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;min-width:0;position:relative;z-index:1">
+            <div style="font-size:12px;font-weight:700;color:#7A3F00">阿夾 整咗份月度公平度報告</div>
+            <div style="font-size:10.5px;color:#7A3F00;opacity:.85;margin-top:1px">飯腳 group · 阿明應該多畀 $340</div>
+          </div>
+          <button style="background:#7A3F00;color:#fff;border:none;border-radius:14px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;position:relative;z-index:1">查看</button>
+        </div>
+
         <!-- section: groups -->
-        <div style="font-size:14px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between"><span>你嘅小組</span><span style="font-size:12px;color:#765BFF;font-weight:500">管理</span></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><span>你嘅小組 <span style="color:#777777;font-weight:500;font-size:11px;margin-left:4px">4 個</span></span><span style="font-size:12px;color:#765BFF;font-weight:500;display:flex;align-items:center;gap:2px">管理 <svg width="10" height="10" viewBox="0 0 6 12" fill="none"><path d="M1 1l4 5-4 5" stroke="#765BFF" stroke-width="1.5" stroke-linecap="round"/></svg></span></div>
         <div style="display:flex;flex-direction:column;gap:10px">
           <!-- group 1 -->
-          <div class="card" style="padding:14px">
+          <div class="ap-card" style="padding:14px">
             <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:44px;height:44px;background:#ECE7FF;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">🍽️</div>
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#FFCB8F,#FF9F45);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)">🍽️</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:15px;font-weight:700">飯腳</div>
                 <div style="font-size:11px;color:#777777;margin-top:1px">4人 · 海皇粥店 · 2 日前</div>
               </div>
               <div style="text-align:right"><div class="tag-g">被欠 HK$ 145</div></div>
             </div>
-            <div style="display:flex;gap:-4px;margin-top:8px">
-              <div class="av av-24 av-K" style="margin-right:-6px;border:1.5px solid #fff">K</div>
-              <div class="av av-24 av-M" style="margin-right:-6px;border:1.5px solid #fff">明</div>
-              <div class="av av-24 av-Y" style="margin-right:-6px;border:1.5px solid #fff">M</div>
-              <div class="av av-24 av-L" style="border:1.5px solid #fff">L</div>
+            <div style="display:flex;margin-top:8px;align-items:center;gap:8px">
+              <div style="display:flex">
+                <div class="av av-24 av-K" style="margin-right:-6px;border:1.5px solid #fff">K</div>
+                <div class="av av-24 av-M" style="margin-right:-6px;border:1.5px solid #fff">明</div>
+                <div class="av av-24 av-Y" style="margin-right:-6px;border:1.5px solid #fff">M</div>
+                <div class="av av-24 av-U" style="border:1.5px solid #fff">你</div>
+              </div>
+              <div style="font-size:10px;color:#765BFF;background:#ECE7FF;padding:2px 6px;border-radius:8px;font-weight:600">✦ 阿夾 守護</div>
             </div>
           </div>
           <!-- group 2 -->
-          <div class="card" style="padding:14px">
+          <div class="ap-card" style="padding:14px">
             <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:44px;height:44px;background:#FFF2E6;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">🏠</div>
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#A8E8AC,#52C41A);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)">🏠</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:15px;font-weight:700">室友</div>
                 <div style="font-size:11px;color:#777777;margin-top:1px">3人 · 電費 · 5 日前</div>
@@ -1142,9 +1267,9 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
             </div>
           </div>
           <!-- group 3 -->
-          <div class="card" style="padding:14px">
+          <div class="ap-card" style="padding:14px">
             <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:44px;height:44px;background:#F5F5F5;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">💼</div>
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#C5B5FF,#9580FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)">💼</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:15px;font-weight:700">Project Team</div>
                 <div style="font-size:11px;color:#777777;margin-top:1px">5人 · 1 週前</div>
@@ -1153,9 +1278,9 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
             </div>
           </div>
           <!-- group 4 -->
-          <div class="card" style="padding:14px">
+          <div class="ap-card" style="padding:14px">
             <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:44px;height:44px;background:#FFF0F0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px">👨‍👩‍👧</div>
+              <div style="width:44px;height:44px;background:linear-gradient(135deg,#FFB8B8,#EC4899);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.3)">👨‍👩‍👧</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:15px;font-weight:700">屋企人</div>
                 <div style="font-size:11px;color:#777777;margin-top:1px">4人 · 燒臘 · 3 日前</div>
@@ -1166,8 +1291,8 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
         </div>
 
         <!-- recent activity -->
-        <div style="font-size:14px;font-weight:700;margin:16px 0 10px">最近活動</div>
-        <div class="card" style="overflow:hidden;padding:0">
+        <div style="font-size:14px;font-weight:700;margin:16px 0 10px;display:flex;justify-content:space-between;align-items:center"><span>最近活動</span><span style="font-size:11px;color:#777777;font-weight:500">查看全部 ›</span></div>
+        <div class="ap-card" style="overflow:hidden;padding:0">
           <div style="padding:10px 14px;border-bottom:1px solid #EFEFEF;display:flex;align-items:center;gap:10px">
             <div class="av av-32 av-K">K</div>
             <div style="flex:1"><div style="font-size:13px;font-weight:600">Karen 付了 海皇粥店</div><div style="font-size:11px;color:#777777">飯腳 · 2 日前</div></div>
@@ -1180,9 +1305,31 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
           </div>
         </div>
       </div></div>
-      <!-- FAB -->
-      <div class="fab" style="bottom:52px">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+
+      <!-- bottom nav (AlipayHK 5-tab with raised FAB) -->
+      <div class="ap-tabnav" style="bottom:34px">
+        <div class="ap-tabnav-item on">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 12l2-2 4 4 8-8 4 4-12 12z"/></svg>
+          <span>過數</span>
+        </div>
+        <div class="ap-tabnav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span>掃描</span>
+        </div>
+        <div class="ap-tabnav-fab">
+          <div class="ap-tabnav-fab-btn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M3 12l3 9 9-3 6-6-3-9-9 3z"/></svg>
+          </div>
+          <div class="ap-tabnav-fab-lbl">收/付款</div>
+        </div>
+        <div class="ap-tabnav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 2l3 3-11 11H5v-3z"/><path d="M14 4l4 4"/></svg>
+          <span>交通</span>
+        </div>
+        <div class="ap-tabnav-item">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+          <span>我的</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1230,34 +1377,47 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
           </div>
         </div>
 
-        <!-- ★ BALANCES CARD (most prominent) -->
-        <div class="card" style="padding:16px;border:1.5px solid #DDDDDD;position:relative;overflow:hidden">
-          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#765BFF 0%,#03C567 50%,#F81404 100%);opacity:.6"></div>
-          <div style="font-size:13px;font-weight:700;color:#777777;margin-bottom:12px;display:flex;align-items:center;gap:6px">結餘 <div class="ai-mark" style="width:14px;height:14px;font-size:8px">AI</div></div>
-          <!-- 阿明: owes you -->
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EFEFEF">
-            <div class="av av-40 av-M">明</div>
-            <div style="flex:1"><div style="font-size:14px;font-weight:600">阿明</div><div style="font-size:11px;color:#03C567;font-weight:600">欠你</div></div>
-            <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M2 7h22M22 2l6 5-6 5" stroke="#03C567" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <div class="money" style="font-size:17px;color:#03C567">HK$ 245</div>
+        <!-- ★ BALANCES CARD (Alipay aesthetic — lavender + corner badge) -->
+        <div class="ap-hero" style="padding:16px 16px 14px">
+          <div class="ap-corner">
+            <span style="font-size:9px">✦</span>
+            <span>AI 後數 · 已優化</span>
           </div>
-          <!-- Karen: you owe -->
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EFEFEF">
-            <div class="av av-40 av-K">K</div>
-            <div style="flex:1"><div style="font-size:14px;font-weight:600">Karen</div><div style="font-size:11px;color:#F81404;font-weight:600">你欠佢</div></div>
-            <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M30 7H8M10 2l-6 5 6 5" stroke="#F81404" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <div class="money" style="font-size:17px;color:#F81404">HK$ 80</div>
+          <div style="font-size:11px;color:#5A3F8F;font-weight:600;margin-bottom:2px">飯腳 · 結餘</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:12px">
+            <div class="money" style="font-size:24px;color:#2A1F5C;letter-spacing:-.8px">淨額 +HK$ 165</div>
+            <div style="font-size:10.5px;color:#5A3F8F">3 人 · 2 筆未結</div>
           </div>
-          <!-- 阿May: settled -->
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 0">
-            <div class="av av-40 av-Y">M</div>
-            <div style="flex:1"><div style="font-size:14px;font-weight:600">阿May</div><div style="font-size:11px;color:#9CA3AF">已結清</div></div>
-            <div class="tag-gray" style="font-size:12px">✓ 結清</div>
+
+          <!-- inner balance rows on translucent card -->
+          <div style="background:rgba(255,255,255,.55);border-radius:12px;padding:4px 12px;backdrop-filter:blur(8px)">
+            <!-- 阿明: owes you -->
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(118,91,255,.12)">
+              <div class="av av-40 av-M">明</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#2A1F5C">阿明</div><div style="font-size:11px;color:#03C567;font-weight:600">欠你</div></div>
+              <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M2 7h22M22 2l6 5-6 5" stroke="#03C567" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="money" style="font-size:17px;color:#03C567">HK$ 245</div>
+            </div>
+            <!-- Karen: you owe -->
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(118,91,255,.12)">
+              <div class="av av-40 av-K">K</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#2A1F5C">Karen</div><div style="font-size:11px;color:#F81404;font-weight:600">你欠佢</div></div>
+              <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M30 7H8M10 2l-6 5 6 5" stroke="#F81404" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div class="money" style="font-size:17px;color:#F81404">HK$ 80</div>
+            </div>
+            <!-- 阿May: settled -->
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+              <div class="av av-40 av-Y">M</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#2A1F5C">阿May</div><div style="font-size:11px;color:#9CA3AF">已結清</div></div>
+              <div class="tag-gray" style="font-size:12px">✓ 結清</div>
+            </div>
           </div>
+
           <!-- settle CTA -->
-          <div class="btn-p glow-pulse" style="margin-top:12px;background:linear-gradient(135deg,#765BFF 0%,#5A45D9 100%);box-shadow:0 4px 14px rgba(118,91,255,.4)">
+          <button class="glow-pulse" style="margin-top:12px;width:100%;height:46px;background:linear-gradient(135deg,#9580FF 0%,#765BFF 60%,#5A45D9 100%);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;box-shadow:0 6px 16px rgba(118,91,255,.45),inset 0 1px 0 rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2L1 21h22zM12 6l7.53 13H4.47z"/></svg>
             後數 — 一鍵結算
-          </div>
+          </button>
         </div>
 
         <!-- quick actions row -->
