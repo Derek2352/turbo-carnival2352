@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlipayHK 夾單 (Gaap Daan) — Design System</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-primary:#765BFF; --c-primary-dark:#5A45D9; --c-primary-light:#ECE7FF;
+  --c-success:#03C567; --c-warning:#F81404; --c-neutral:#9E9E9E;
+  --c-bg-white:#FFFFFF; --c-bg-gray:#F2F2F2; --c-surface:#FFFFFF;
+  --c-border:#DDDDDD; --c-text-1:#333333; --c-text-2:#777777; --c-text-3:#9CA3AF;
+}
+html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","Helvetica Neue",sans-serif;background:#EEF0F3;color:var(--c-text-1);-webkit-font-smoothing:antialiased}
+
+/* animations */
+@keyframes aiPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(118,91,255,.5)}50%{transform:scale(1.15);box-shadow:0 0 0 8px rgba(118,91,255,0)}}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes scanLine{0%{top:0}100%{top:calc(100% - 2px)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(118,91,255,.4),0 4px 12px rgba(118,91,255,.3)}50%{box-shadow:0 0 0 8px rgba(118,91,255,0),0 4px 16px rgba(118,91,255,.5)}}
+@keyframes dashMove{to{stroke-dashoffset:-12}}
+.ai-pulse{animation:aiPulse 2s ease-in-out infinite}
+.dot-pulse{animation:dotPulse 1.4s ease-in-out infinite}
+.glow-pulse{animation:glowPulse 2.4s ease-in-out infinite}
+.dashed-anim{stroke-dasharray:6 4;animation:dashMove 1s linear infinite}
+
+/* layout */
+.page{display:flex;min-height:100vh}
+.sidebar{width:280px;min-width:280px;background:#fff;border-right:1px solid var(--c-border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;padding:20px 0}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:#DDDDDD;border-radius:2px}
+.sb-logo{padding:0 20px 16px;border-bottom:1px solid var(--c-border);margin-bottom:12px}
+.sb-section{font-size:11px;font-weight:700;color:var(--c-text-3);letter-spacing:.08em;text-transform:uppercase;padding:14px 20px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:7px 20px;font-size:13px;color:var(--c-text-2);text-decoration:none;cursor:pointer;transition:background .15s}
+.sb-item:hover{background:var(--c-bg-gray);color:var(--c-primary)}
+.sb-id{font-size:11px;font-weight:700;color:var(--c-text-3);min-width:30px}
+.main{margin-left:0;flex:1;padding:32px 28px 80px}
+.sec-header{margin-bottom:28px;padding-bottom:14px;border-bottom:2px solid var(--c-border)}
+.sec-header h2{font-size:24px;font-weight:700}
+.sec-header p{font-size:14px;color:var(--c-text-2);margin-top:4px}
+
+.grid-screens{display:grid;grid-template-columns:repeat(3,393px);gap:56px 28px;justify-content:start;margin-bottom:48px}
+@media (max-width:1480px){.grid-screens{grid-template-columns:repeat(2,393px)}}
+@media (max-width:1020px){.grid-screens{grid-template-columns:393px}.main{margin-left:0;padding:16px}.sidebar{display:none}}
+
+.cell{display:flex;flex-direction:column;align-items:center;gap:14px}
+.meta{text-align:center}
+.fid{display:inline-block;background:var(--c-primary);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;margin-bottom:6px;letter-spacing:.04em}
+.fname{display:block;font-size:13px;font-weight:600;color:var(--c-text-1)}
+.fdesc{display:block;font-size:11px;color:var(--c-text-3);margin-top:2px}
+
+/* iphone frame */
+.ph{width:393px;height:852px;background:#0a0a0a;border-radius:54px;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 0 0 2px #3A3A3C,0 0 0 4px #1C1C1E,0 30px 60px rgba(0,0,0,.3),0 12px 24px rgba(0,0,0,.16);overflow:hidden;flex-shrink:0}
+.phi{position:absolute;inset:3px;border-radius:51px;overflow:hidden;display:flex;flex-direction:column}
+.sb{height:47px;display:flex;align-items:flex-end;padding:0 24px 9px;justify-content:space-between;flex-shrink:0;position:relative;z-index:2}
+.sb-time{font-size:15px;font-weight:600;letter-spacing:-.3px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.di{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#000;border-radius:20px;z-index:1}
+.sb-ic{display:flex;align-items:center;gap:5px}
+.nav{height:44px;display:flex;align-items:center;padding:0 16px;flex-shrink:0;position:relative;background:#fff;border-bottom:1px solid var(--c-border)}
+.nav-title{position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;white-space:nowrap}
+.content{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;overflow:hidden}
+.home{height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:2}
+.home-bar{width:134px;height:5px;background:#333333;border-radius:3px;opacity:.25}
+
+/* tokens */
+.chip{display:inline-flex;align-items:center;height:36px;padding:0 12px;border-radius:18px;font-size:13px;gap:5px;white-space:nowrap;flex-shrink:0;font-weight:500}
+.chip-blue{background:var(--c-primary);color:#fff}
+.chip-out{background:#fff;border:1.5px solid var(--c-primary);color:var(--c-primary)}
+.chip-gray{background:#fff;border:1px solid var(--c-border);color:var(--c-text-1)}
+.chip-light{background:#EFEFEF;color:var(--c-text-1)}
+.chip-sm{height:28px;padding:0 10px;font-size:12px;border-radius:14px}
+.badge-shared{display:inline-flex;align-items:center;height:20px;padding:0 7px;background:var(--c-primary-light);color:var(--c-primary);font-size:11px;font-weight:600;border-radius:10px}
+.badge-recommend{background:#FF4D4F;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0;position:relative}
+.av-32{width:32px;height:32px;font-size:12px}
+.av-40{width:40px;height:40px;font-size:14px}
+.av-48{width:48px;height:48px;font-size:16px}
+.av-24{width:24px;height:24px;font-size:10px}
+.av-K{background:#F97316}.av-M{background:#8B5CF6}.av-Y{background:#EC4899}.av-L{background:#10B981}.av-J{background:#06B6D4}.av-V{background:#52C41A}.av-U{background:#765BFF}.av-X{background:#9E9E9E}
+.av-bot{background:linear-gradient(135deg,#765BFF 0%,#5A45D9 60%,#9580FF 100%);position:relative;overflow:hidden}
+.av-bot::after{content:"";position:absolute;top:-30%;left:-30%;width:60%;height:60%;background:radial-gradient(circle,rgba(255,255,255,.6),transparent 70%);opacity:.7}
+.bot-msg{background:#fff;border:1px solid #ECE7FF;border-left:3px solid #765BFF;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.45;color:#333333;position:relative}
+.bot-msg-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;font-weight:700;color:#765BFF;text-transform:uppercase;letter-spacing:.05em}
+.bot-sparkle{display:inline-block;animation:botPulse 2.4s ease-in-out infinite}
+@keyframes botPulse{0%,100%{transform:scale(1) rotate(0deg);opacity:1}50%{transform:scale(1.18) rotate(8deg);opacity:.85}}
+.av-dot{position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;border:2px solid #fff}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)}
+.btn-p{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:var(--c-primary);color:#fff;border-radius:8px;font-size:16px;font-weight:600;border:none;cursor:pointer}
+.btn-s{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}
+.btn-d{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:#DDDDDD;color:#9CA3AF;border-radius:8px;font-size:16px;font-weight:600;border:none}
+.money{font-variant-numeric:tabular-nums;font-weight:600}
+.mc{width:160px;height:120px;background:#fff;border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1.5px solid var(--c-border);position:relative}
+.mc.sel{border-color:var(--c-primary);box-shadow:0 0 0 3px rgba(118,91,255,.1),0 1px 3px rgba(0,0,0,.06)}
+.row-item{min-height:64px;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EFEFEF;background:#fff}
+.row-bal{min-height:56px;padding:0 16px;display:flex;align-items:center;gap:12px}
+.ai-mark{width:18px;height:18px;background:var(--c-primary);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--c-primary)}
+.toggle{width:44px;height:26px;border-radius:13px;position:relative;flex-shrink:0;transition:background .2s}
+.toggle-on{background:var(--c-primary)}
+.toggle-off{background:#DDDDDD}
+.toggle-th{position:absolute;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
+.toggle-on .toggle-th{left:21px}
+.toggle-off .toggle-th{left:3px}
+.prog{height:8px;background:#DDDDDD;border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#765BFF,#9580FF);border-radius:4px}
+.fab{width:56px;height:56px;background:var(--c-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(118,91,255,.4);color:#fff;position:absolute;right:16px;bottom:24px;z-index:5}
+.tag-g{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#F6FFED;border:1px solid #B7EB8F;color:#389E0D;font-size:11px;border-radius:4px;font-weight:500}
+.tag-r{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#FFF2F0;border:1px solid #FFCCC7;color:#CF1322;font-size:11px;border-radius:4px;font-weight:500}
+.tag-gray{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#F5F5F5;border:1px solid #D9D9D9;color:#595959;font-size:11px;border-radius:4px;font-weight:500}
+.anchor{scroll-margin-top:32px}
+
+/* component library + tokens */
+.comp-section{background:#fff;border-radius:16px;padding:32px;margin-bottom:32px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
+.comp-cell{padding:20px;background:#F8FAFC;border-radius:12px;border:1px solid var(--c-border);display:flex;flex-direction:column;gap:12px;min-height:140px}
+.comp-label{font-size:11px;font-weight:700;color:var(--c-text-3);text-transform:uppercase;letter-spacing:.06em}
+.tokens-table{width:100%;border-collapse:collapse;font-size:13px}
+.tokens-table th{background:var(--c-bg-gray);padding:10px 14px;text-align:left;font-weight:600;color:var(--c-text-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.tokens-table td{padding:10px 14px;border-bottom:1px solid var(--c-border)}
+.swatch{width:22px;height:22px;border-radius:5px;display:inline-block;vertical-align:middle;margin-right:8px;border:1px solid rgba(0,0,0,.08)}
+
+/* dark mode tokens for E4 */
+.dm-bg{background:#1A1A1A}.dm-surf{background:#2C2C2E}.dm-bord{border-color:#3A3A3C !important}.dm-t1{color:#FFF}.dm-t2{color:rgba(235,235,245,.6)}.dm-t3{color:rgba(235,235,245,.3)}
+
+/* ════════ AlipayHK app aesthetic ════════ */
+.ap-hero{background:linear-gradient(135deg,#E8E0FF 0%,#D4C5FF 55%,#C5B5FF 100%);border-radius:18px;padding:16px 18px;position:relative;overflow:hidden;color:#333333}
+.ap-hero-dark{background:linear-gradient(135deg,#8B7AFF 0%,#765BFF 60%,#5A45D9 100%);color:#fff}
+.ap-corner{position:absolute;top:0;right:0;background:linear-gradient(135deg,#FFD980 0%,#FFB347 100%);color:#5A3010;font-size:9px;font-weight:700;padding:4px 10px 4px 14px;border-radius:0 18px 0 14px;letter-spacing:.04em;display:flex;align-items:center;gap:3px;box-shadow:0 2px 6px rgba(255,153,0,.25)}
+.ap-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-radius:20px;padding:8px 14px;font-size:13px;color:#777777;border:1px solid rgba(255,255,255,.8)}
+.ap-pills{display:inline-flex;align-items:center;background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border-radius:18px;padding:3px;gap:2px}
+.ap-pill{padding:6px 14px;border-radius:16px;font-size:12px;color:#5A3F8F;font-weight:500;cursor:pointer;transition:all .15s}
+.ap-pill.on{background:#fff;color:#765BFF;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ap-icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 4px}
+.ap-icon-cell{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.ap-icon-wrap{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.ap-icon-lbl{font-size:10px;color:#333333;text-align:center;font-weight:500}
+.ap-tabnav{position:absolute;bottom:0;left:0;right:0;height:62px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:flex-start;padding:6px 0 0;z-index:3}
+.ap-tabnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#777777;cursor:pointer}
+.ap-tabnav-item.on{color:#765BFF}
+.ap-tabnav-fab{flex:1;display:flex;justify-content:center;position:relative;margin-top:-18px}
+.ap-tabnav-fab-btn{width:50px;height:50px;background:linear-gradient(135deg,#9580FF 0%,#765BFF 60%,#5A45D9 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px rgba(118,91,255,.45),inset 0 1px 0 rgba(255,255,255,.3)}
+.ap-tabnav-fab-lbl{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:10px;color:#333333;font-weight:600;white-space:nowrap}
+.ap-card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ap-brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#9580FF,#765BFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+</style>
+</head>
+
+<body>
+<div class="page">
+<main class="main">
+<!-- === SECTION 5 — EDGE CASES === -->
+<div class="sec-header anchor" id="section-5">
+  <h2>Section 5 — Edge Cases &amp; Variants</h2>
+  <p>OCR uncertainty · non-user web flow · dispute · dark-mode hero</p>
+</div>
+<div class="grid-screens">
+<!-- ━━━━━━ FRAME E1: OCR UNCERTAINTY ━━━━━━ -->
+<div class="cell anchor" id="frame-e1">
+  <div class="meta"><span class="fid">FRAME E1</span><span class="fname">OCR Uncertainty</span><span class="fdesc">Low-confidence items + edit modal</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <div class="nav"><div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="nav-title">分配項目</div><div style="position:absolute;right:16px;display:flex;align-items:center;gap:4px"><div class="ai-mark animated">AI</div><span style="font-size:12px;color:#765BFF;font-weight:600">2 需確認</span></div></div>
+      <div class="content" style="position:relative">
+        <div class="scroll" style="padding:0">
+          <!-- AI notice banner -->
+          <div style="background:#FFFBE6;border-bottom:1px solid #FFE58F;padding:10px 16px;display:flex;align-items:center;gap:8px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#F0B000"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            <span style="font-size:12px;color:#875500;font-weight:600">AI 對 2 項信心度較低，請確認</span>
+          </div>
+          <div style="background:#fff">
+            <!-- item 1: high confidence -->
+            <div class="row-item">
+              <div style="width:22px;height:22px;border-radius:50%;background:#03C567;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600">蝦餃</div><div style="font-size:11px;color:#777777">×2 · 高信心度</div></div>
+              <div class="money" style="font-size:14px">$58</div>
+              <div class="av av-32 av-K" style="margin-left:8px">K</div>
+            </div>
+            <!-- item 2: uncertain (pulsing dashed border) -->
+            <div style="margin:6px 10px;border:2px dashed #F0B000;border-radius:10px;padding:10px;background:#FFFBE6;position:relative" class="dot-pulse">
+              <div style="position:absolute;top:-1px;right:8px;background:#F0B000;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:0 0 6px 6px">AI 不確定</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:22px;height:22px;border-radius:50%;background:#F0B000;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:#fff;font-size:12px;font-weight:700">?</span></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:600">蘿蔔糕 / 腸粉？</div><div style="font-size:11px;color:#875500;margin-top:1px">AI 不確定呢項，請確認</div></div>
+                <div class="money" style="font-size:14px">$42?</div>
+                <div class="chip chip-sm" style="background:#F0B000;color:#fff;font-size:11px;margin-left:4px">確認</div>
+              </div>
+            </div>
+            <!-- item 3: high confidence -->
+            <div class="row-item">
+              <div style="width:22px;height:22px;border-radius:50%;background:#03C567;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600">炒飯</div><div style="font-size:11px;color:#777777">×1 · 高信心度</div></div>
+              <div class="money" style="font-size:14px">$128</div>
+              <div class="av av-32 av-K" style="margin-left:8px">K</div>
+            </div>
+            <!-- item 4: uncertain -->
+            <div style="margin:6px 10px;border:2px dashed #F0B000;border-radius:10px;padding:10px;background:#FFFBE6" class="dot-pulse">
+              <div style="position:absolute;top:-1px;right:8px;background:#F0B000;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:0 0 6px 6px">AI 不確定</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:22px;height:22px;border-radius:50%;background:#F0B000;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:#fff;font-size:12px;font-weight:700">?</span></div>
+                <div style="flex:1"><div style="font-size:14px;font-weight:600">??? × ?</div><div style="font-size:11px;color:#875500;margin-top:1px">無法辨識，請手動輸入</div></div>
+                <div class="money" style="font-size:14px;color:#F0B000">??</div>
+                <div class="chip chip-sm" style="background:#F0B000;color:#fff;font-size:11px;margin-left:4px">確認</div>
+              </div>
+            </div>
+            <!-- more items -->
+            <div class="row-item">
+              <div style="width:22px;height:22px;border-radius:50%;background:#03C567;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:600">例湯</div><div style="font-size:11px;color:#777777">×4</div></div>
+              <div class="money" style="font-size:14px">$160</div>
+              <div style="margin-left:8px"><div class="badge-shared">共享</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- edit modal overlay -->
+        <div class="modal-overlay">
+          <div class="modal-sheet" style="background:#fff;padding:20px 16px;border-radius:20px 20px 0 0">
+            <div class="modal-handle"></div>
+            <div style="font-size:16px;font-weight:700;margin-bottom:4px">確認項目資料</div>
+            <div style="font-size:12px;color:#777777;margin-bottom:16px">AI 識別：「蘿蔔糕 / 腸粉」× 1 · $42</div>
+            <div style="margin-bottom:12px">
+              <div style="font-size:12px;font-weight:600;color:#777777;margin-bottom:6px">項目名稱</div>
+              <div style="border:1.5px solid #765BFF;border-radius:8px;padding:10px 14px;font-size:15px;font-weight:600;background:#ECE7FF">蘿蔔糕<span style="opacity:.5">|</span></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-bottom:14px">
+              <div style="flex:1"><div style="font-size:12px;font-weight:600;color:#777777;margin-bottom:6px">數量</div><div style="border:1.5px solid #DDDDDD;border-radius:8px;padding:10px 14px;font-size:15px;font-weight:600">1</div></div>
+              <div style="flex:1.5"><div style="font-size:12px;font-weight:600;color:#777777;margin-bottom:6px">價格 (HK$)</div><div style="border:1.5px solid #DDDDDD;border-radius:8px;padding:10px 14px;font-size:15px;font-weight:600">42</div></div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-s" style="flex:1;height:44px;font-size:14px">取消</button>
+              <button class="btn-p" style="flex:1;height:44px;font-size:14px">確認</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME E2: NON-ALIPAYHK USER ━━━━━━ -->
+<div class="cell anchor" id="frame-e2">
+  <div class="meta"><span class="fid">FRAME E2</span><span class="fname">Non-AlipayHK (Web Preview)</span><span class="fdesc">Friend without app — web fallback</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#f0f0f0">
+      <!-- browser chrome -->
+      <div style="background:#E8E8ED;padding:8px 12px;flex-shrink:0">
+        <div style="background:#fff;border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:6px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#9CA3AF" stroke-width="2"/><path d="M12 8v4l2 2" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round"/></svg>
+          <span style="font-size:10px;color:#777777;flex:1">gaap.alipayhk.com/split/abc123</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="content" style="background:#fff">
+        <!-- download banner (prominent) -->
+        <div style="background:linear-gradient(135deg,#765BFF 0%,#5A45D9 100%);padding:14px 16px;color:#fff">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);font-weight:800;font-size:14px">A</div>
+            <div><div style="font-size:14px;font-weight:700">未有 AlipayHK？</div><div style="font-size:11px;opacity:.85;margin-top:1px">下載即賺 HK$ 50 迎新獎勵</div></div>
+            <div style="margin-left:auto;background:#fff;color:#765BFF;padding:6px 12px;border-radius:18px;font-size:12px;font-weight:700;white-space:nowrap">立即下載</div>
+          </div>
+          <div style="background:rgba(255,255,255,.15);border-radius:8px;padding:8px 10px;display:flex;align-items:center;gap:6px;backdrop-filter:blur(4px)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            <span style="font-size:11px;opacity:.9">下載後自動跳返呢個分帳</span>
+          </div>
+        </div>
+        <!-- same claim UI as A9 but simplified -->
+        <div style="padding:14px 16px">
+          <div style="font-size:13px;color:#777777;margin-bottom:10px">你 想同你夾單 · 海皇粥店 · HK$ 920</div>
+          <div class="card" style="overflow:hidden;padding:0;margin-bottom:14px">
+            <div style="padding:12px 16px;border-bottom:1px solid #EFEFEF;display:flex;align-items:center;gap:10px;background:#ECE7FF">
+              <div style="width:20px;height:20px;border-radius:50%;background:#765BFF;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+              <div style="flex:1;font-size:13px;font-weight:600;color:#765BFF">蝦餃 ×2 — 我嘅</div>
+              <div class="money" style="font-size:13px;color:#765BFF">$58</div>
+            </div>
+            <div style="padding:12px 16px;border-bottom:1px solid #EFEFEF;display:flex;align-items:center;gap:10px">
+              <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #DDDDDD"></div>
+              <div style="flex:1;font-size:13px">燒賣 ×3</div>
+              <div class="money" style="font-size:13px">$75</div>
+            </div>
+            <div style="padding:12px 16px;display:flex;align-items:center;gap:10px">
+              <div class="badge-shared" style="flex-shrink:0">共享</div>
+              <div style="flex:1;font-size:13px">例湯 + 茶錢</div>
+              <div class="money" style="font-size:13px">$184</div>
+            </div>
+          </div>
+          <!-- your total -->
+          <div style="background:#F5F2FF;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+            <div style="font-size:13px;font-weight:600">你嘅份</div>
+            <div class="money" style="font-size:22px;color:#765BFF">HK$ 178</div>
+          </div>
+          <!-- alternative payment -->
+          <div style="font-size:12px;font-weight:700;color:#777777;margin-bottom:8px">支付方式</div>
+          <button class="btn-p" style="margin-bottom:8px">下載 AlipayHK 付款</button>
+          <div class="card" style="padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;background:#F2F2F2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">🏦</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">FPS 轉數快</div><div style="font-size:11px;color:#777777">轉帳至 9021 3456</div></div>
+            <div class="chip chip-sm chip-out" style="font-size:11px">複製</div>
+          </div>
+          <div class="card" style="padding:12px 14px;display:flex;align-items:center;gap:10px">
+            <div style="width:36px;height:36px;background:#F2F2F2;border-radius:8px;display:flex;align-items:center;justify-content:center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="3" height="3"/><rect x="14" y="7" width="3" height="3"/><rect x="14" y="14" width="3" height="3"/><rect x="7" y="14" width="3" height="3"/></svg>
+            </div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">銀行轉帳 QR</div><div style="font-size:11px;color:#777777">掃碼付款</div></div>
+            <div class="chip chip-sm chip-gray" style="font-size:11px">查看</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME E3: DISPUTE ━━━━━━ -->
+<div class="cell anchor" id="frame-e3">
+  <div class="meta"><span class="fid">FRAME E3</span><span class="fname">Dispute Flow</span><span class="fdesc">Friend disputes · reason picker modal</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <!-- split frame: left = friend view, right = host notification -->
+      <div class="nav"><div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="nav-title">夾單確認</div></div>
+      <div class="content" style="position:relative">
+        <!-- background: friend's tap-to-claim view (dimmed) -->
+        <div style="padding:0;background:#fff;opacity:.4">
+          <div class="row-item"><div class="av av-32 av-M" style="opacity:.5"></div><div style="flex:1;font-size:14px;font-weight:600">燒賣 ×3</div><div class="money" style="font-size:14px">$75</div></div>
+          <div class="row-item" style="background:#FFF2F0;"><div style="width:22px;height:22px;border-radius:50%;border:2px solid #F81404"></div><div style="flex:1"><div style="font-size:14px;font-weight:600">炒飯 ×1</div><div style="font-size:11px;color:#F81404;font-weight:600">我提出異議</div></div><div class="money" style="font-size:14px">$128</div></div>
+          <div class="row-item"><div style="width:22px;height:22px;border-radius:50%;background:#03C567;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div><div style="flex:1;font-size:14px;font-weight:600">例湯 ×4</div><div class="money" style="font-size:14px">$160</div></div>
+        </div>
+
+        <!-- dispute reason modal -->
+        <div class="modal-overlay" style="background:rgba(0,0,0,.6)">
+          <div class="modal-sheet" style="border-radius:20px 20px 0 0;background:#fff;padding:20px 16px">
+            <div class="modal-handle"></div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#F81404"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+              <div style="font-size:16px;font-weight:700">提出異議</div>
+            </div>
+            <div style="font-size:13px;color:#777777;margin-bottom:16px">炒飯 ×1 · HK$ 128</div>
+
+            <div style="font-size:12px;font-weight:700;color:#777777;margin-bottom:8px">原因</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+              <div style="padding:12px 14px;border-radius:10px;border:1.5px solid #765BFF;background:#ECE7FF;display:flex;align-items:center;gap:10px">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #765BFF;background:#765BFF;display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;border-radius:50%;background:#fff"></div></div>
+                <span style="font-size:14px;font-weight:600;color:#765BFF">呢個唔係我食</span>
+              </div>
+              <div style="padding:12px 14px;border-radius:10px;border:1.5px solid #DDDDDD;display:flex;align-items:center;gap:10px">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #DDDDDD;flex-shrink:0"></div>
+                <span style="font-size:14px">價錢有誤</span>
+              </div>
+              <div style="padding:12px 14px;border-radius:10px;border:1.5px solid #DDDDDD;display:flex;align-items:center;gap:10px">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #DDDDDD;flex-shrink:0"></div>
+                <span style="font-size:14px">已經另外付款</span>
+              </div>
+              <div style="padding:12px 14px;border-radius:10px;border:1.5px solid #DDDDDD;display:flex;align-items:center;gap:10px">
+                <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #DDDDDD;flex-shrink:0"></div>
+                <span style="font-size:14px">其他原因</span>
+              </div>
+            </div>
+
+            <!-- note input -->
+            <div style="border:1px solid #DDDDDD;border-radius:8px;padding:10px 12px;font-size:13px;color:#9CA3AF;margin-bottom:14px;min-height:52px">加備注（選填）</div>
+
+            <!-- host notification preview -->
+            <div style="background:#FFF2F0;border-radius:8px;padding:10px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#F81404"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+              <span style="font-size:11px;color:#CF1322;font-weight:500">你 (主辦人) 將收到通知，可重新分配此項。</span>
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <button class="btn-s" style="flex:1;height:44px;font-size:14px">取消</button>
+              <button style="flex:1;height:44px;font-size:14px;background:#F81404;color:#fff;border-radius:8px;border:none;font-weight:600">提交異議</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME E4: DARK MODE HERO ━━━━━━ -->
+<div class="cell anchor" id="frame-e4">
+  <div class="meta"><span class="fid">FRAME E4</span><span class="fname">Dark Mode — Group Detail (B2)</span><span class="fdesc">Same layout · dark tokens</span></div>
+  <div class="ph" data-sb="light">
+    <div class="phi dm-bg">
+      <!-- dark nav -->
+      <div class="nav dm-surf" style="background:#2C2C2E;border-bottom-color:#3A3A3C">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="#765BFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title dm-t1" style="display:flex;align-items:center;gap:6px"><span style="font-size:18px">🍽️</span><span style="color:#fff">飯腳</span><span style="font-size:13px;color:rgba(235,235,245,.5);font-weight:400">4人</span></div>
+        <div style="position:absolute;right:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(235,235,245,.6)" stroke-width="2" stroke-linecap="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      </div>
+      <div class="content dm-bg"><div class="scroll" style="padding:14px 16px 20px">
+        <!-- dark balances card -->
+        <div style="background:#2C2C2E;border-radius:12px;padding:16px;border:1px solid #3A3A3C;margin-bottom:14px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#765BFF 0%,#03C567 50%,#F81404 100%);opacity:.8"></div>
+          <div style="font-size:13px;font-weight:700;color:rgba(235,235,245,.5);margin-bottom:12px;display:flex;align-items:center;gap:6px">結餘 <div class="ai-mark animated">AI</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #3A3A3C">
+            <div class="av av-40 av-M">明</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#fff">阿明</div><div style="font-size:11px;color:#03C567;font-weight:600">欠你</div></div>
+            <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M2 7h22M22 2l6 5-6 5" stroke="#03C567" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="money" style="font-size:17px;color:#03C567">HK$ 245</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #3A3A3C">
+            <div class="av av-40 av-K">K</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#fff">Karen</div><div style="font-size:11px;color:#F81404;font-weight:600">你欠佢</div></div>
+            <svg width="32" height="14" viewBox="0 0 32 14" fill="none"><path d="M30 7H8M10 2l-6 5 6 5" stroke="#F81404" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div class="money" style="font-size:17px;color:#F81404">HK$ 80</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0">
+            <div class="av av-40 av-Y">M</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:600;color:#fff">阿May</div><div style="font-size:11px;color:rgba(235,235,245,.4)">已結清</div></div>
+            <div style="background:#3A3A3C;color:rgba(235,235,245,.5);font-size:12px;padding:3px 8px;border-radius:6px">✓ 結清</div>
+          </div>
+          <div style="margin-top:12px;background:linear-gradient(135deg,#765BFF,#5A45D9);border-radius:8px;height:52px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:600;box-shadow:0 4px 14px rgba(118,91,255,.4)">後數 — 一鍵結算</div>
+        </div>
+
+        <!-- dark quick actions -->
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <div style="flex:1;background:#2C2C2E;border-radius:10px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid #3A3A3C">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <span style="font-size:11px;color:rgba(235,235,245,.8);font-weight:500">加開支</span>
+          </div>
+          <div style="flex:1;background:#2A1F5F;border-radius:10px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid #765BFF">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 4v16"/></svg>
+            <span style="font-size:11px;color:#765BFF;font-weight:600">夾單</span>
+          </div>
+          <div style="flex:1;background:#2C2C2E;border-radius:10px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid #3A3A3C">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 2 16 8 22 8"/><line x1="23" y1="1" x2="16" y2="8"/><path d="M21 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 3h3a2 2 0 0 1 2 1.72"/></svg>
+            <span style="font-size:11px;color:rgba(235,235,245,.8);font-weight:500">後數</span>
+          </div>
+          <div style="flex:1;background:#2C2C2E;border-radius:10px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid #3A3A3C">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+            <span style="font-size:11px;color:rgba(235,235,245,.8);font-weight:500">邀請</span>
+          </div>
+        </div>
+
+        <!-- dark expense feed -->
+        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px">活動</div>
+        <div style="background:#2C2C2E;border-radius:12px;overflow:hidden;border:1px solid #3A3A3C">
+          <div style="padding:12px 14px;border-bottom:1px solid #3A3A3C;display:flex;align-items:center;gap:10px">
+            <div style="width:40px;height:40px;background:#3A2A0A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#FFB347;flex-shrink:0">海皇</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">海皇粥店</div><div style="font-size:11px;color:rgba(235,235,245,.4)">Karen 付 · 2 日前</div></div>
+            <div class="money" style="font-size:13px;color:rgba(235,235,245,.85)">$920</div>
+          </div>
+          <div style="padding:12px 14px;border-bottom:1px solid #3A3A3C;display:flex;align-items:center;gap:10px">
+            <div style="width:40px;height:40px;background:#1A2A1A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🏪</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">7-11 零食</div><div style="font-size:11px;color:rgba(235,235,245,.4)">你付 · 3 日前</div></div>
+            <div class="money" style="font-size:13px;color:rgba(235,235,245,.85)">$85</div>
+          </div>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:10px">
+            <div style="width:40px;height:40px;background:#2A1A0A;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🍖</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">太興燒臘</div><div style="font-size:11px;color:rgba(235,235,245,.4)">阿明付 · 5 日前</div></div>
+            <div class="money" style="font-size:13px;color:rgba(235,235,245,.85)">$420</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;padding:8px;text-align:center;font-size:11px;color:rgba(235,235,245,.3)">Dark Mode Tokens · #333333 · #2C2C2E · #3A3A3C</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME E5: AI RECOVERY (got it wrong) ⭐ ━━━━━━ -->
+<div class="cell anchor" id="frame-e5">
+  <div class="meta"><span class="fid">FRAME E5</span><span class="fname">AI Recovery ⭐ Trust Through Failure</span><span class="fdesc">When 阿夾 is wrong · graceful undo + learning</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <div class="nav" style="background:#fff">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title" style="display:flex;align-items:center;gap:6px">
+          <div class="av av-24 av-bot"><span class="bot-sparkle" style="position:relative;z-index:1;font-size:11px">✦</span></div>
+          <span>同阿夾講</span>
+        </div>
+      </div>
+      <div class="content"><div class="scroll" style="padding:14px 14px 0;display:flex;flex-direction:column;gap:10px">
+
+        <!-- the wrong action — shown faded as historical context -->
+        <div style="display:flex;gap:8px;align-items:flex-start;opacity:.55">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px;filter:saturate(.6)"><span style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.04)">
+            <div style="font-size:12.5px;line-height:1.45">已開單 ✓ 海皇粥店 $920 · 已分入「飯腳」</div>
+            <div style="font-size:10px;color:#777777;margin-top:3px">7:43pm</div>
+          </div>
+        </div>
+
+        <!-- user pushback -->
+        <div style="display:flex;justify-content:flex-end">
+          <div style="max-width:75%;background:#765BFF;color:#fff;border-radius:12px 12px 4px 12px;padding:10px 12px;font-size:12.5px;line-height:1.45">咦 呢餐唔係飯腳啊，係同同事食</div>
+        </div>
+        <div style="font-size:9px;color:#777777;text-align:right">你 · 7:44pm</div>
+
+        <!-- bot acknowledges + recovers (this is the TRUST moment) -->
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:12px 12px 12px 4px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+              <span style="background:#FFF2F0;color:#F81404;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.04em">我估錯咗</span>
+              <span style="font-size:10px;color:#9CA3AF">7:44pm</span>
+            </div>
+            <div style="font-size:12.5px;line-height:1.5;color:#333333">啊 sorry，畀我撤返。<br/>下次見到 <b>海皇粥店 + 平日晚上</b> 我會諗多陣係邊個 group。</div>
+
+            <!-- the undo card — single emphatic action -->
+            <div style="margin-top:10px;background:#FFFBEB;border:1px solid #FCD34D;border-radius:10px;padding:10px 12px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>
+                <span style="font-size:11px;font-weight:700;color:#B45309">會撤銷呢啲嘢</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:3px;font-size:11px;color:#5A3F0F;line-height:1.5">
+                <div>· 移走「飯腳」嘅 $920 開單</div>
+                <div>· 取消發畀 Karen / 阿明 / 阿May 嘅請求</div>
+                <div>· 移除 阿夾 推斷學習 (今次)</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:6px;margin-top:10px">
+              <button style="flex:1;background:#765BFF;color:#fff;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:600;cursor:pointer">撤銷 · 重新開單</button>
+              <button style="background:#fff;color:#777777;border:1px solid #DDDDDD;border-radius:8px;padding:9px 12px;font-size:12px;cursor:pointer">手動改 group</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- bot follow-up: ask the right question -->
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <div style="font-size:12.5px;line-height:1.45;color:#333333">同事呢餐應該入邊個 group？</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px">
+              <div style="padding:7px 12px;background:#fff;border:1.5px solid #765BFF;border-radius:14px;font-size:12px;font-weight:600;color:#765BFF;display:flex;align-items:center;gap:5px"><span>💼</span>Project Team</div>
+              <div style="padding:7px 12px;background:#F2F2F2;border:1px solid transparent;border-radius:14px;font-size:12px;color:#333333;display:flex;align-items:center;gap:5px"><span>🏢</span>同事</div>
+              <div style="padding:7px 12px;background:#F2F2F2;border:1px solid transparent;border-radius:14px;font-size:12px;color:#765BFF">+ 新 group</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#777777;margin-left:40px">7:44pm</div>
+
+        <!-- meta: what 阿夾 learned -->
+        <div style="margin:6px 0 0;padding:8px 12px;background:#F0F4FF;border-radius:10px;display:flex;align-items:center;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A45D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div style="flex:1;font-size:10.5px;color:#5A45D9;line-height:1.45">阿夾 記低：海皇粥店 + 平日晚上 唔一定係 飯腳 · 下次會問你先</div>
+        </div>
+
+      </div></div>
+
+      <!-- input -->
+      <div style="position:absolute;bottom:34px;left:0;right:0;background:#fff;border-top:1px solid #DDDDDD;padding:8px 12px;display:flex;align-items:center;gap:8px">
+        <div style="flex:1;background:#F2F2F2;border-radius:18px;padding:8px 14px;font-size:13px;color:#9CA3AF">同阿夾講…</div>
+        <button style="width:36px;height:36px;background:#765BFF;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</main>
+</div>
+<script>
+// Inject status bar + home indicator into every phone frame
+const SVG_SIG = '<svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="8" width="3" height="3" rx=".5"/><rect x="4.5" y="5.5" width="3" height="5.5" rx=".5"/><rect x="9" y="2.5" width="3" height="8.5" rx=".5"/><rect x="13.5" y="0" width="3" height="11" rx=".5"/></svg>';
+const SVG_WIFI = '<svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 3.6a10 10 0 0 1 14 0"/><path d="M3.5 6.4a6.5 6.5 0 0 1 9 0"/><path d="M6 9.2a3 3 0 0 1 4 0"/><circle cx="8" cy="10.2" r=".5" fill="currentColor" stroke="none"/></svg>';
+const SVG_BAT = '<svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" stroke-opacity=".4" fill="none"/><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="currentColor" fill-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="1.5" fill="currentColor"/></svg>';
+
+document.querySelectorAll('.ph').forEach(p=>{
+  const inner = p.querySelector('.phi');
+  if(!inner) return;
+  const light = p.dataset.sb === 'light';
+  const c = light ? '#fff' : '#333333';
+  const sb = `<div class="sb" style="color:${c}"><span class="sb-time">9:41</span><div class="di"></div><div class="sb-ic">${SVG_SIG}${SVG_WIFI}${SVG_BAT}</div></div>`;
+  const home = `<div class="home"><div class="home-bar" style="background:${light?'rgba(255,255,255,.5)':'#333333'};opacity:${light?'.6':'.25'}"></div></div>`;
+  inner.insertAdjacentHTML('afterbegin', sb);
+  inner.insertAdjacentHTML('beforeend', home);
+});
+</script>
+</body>
+</html>
+
+</body>
+</html>

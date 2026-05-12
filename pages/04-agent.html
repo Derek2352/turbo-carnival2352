@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlipayHK 夾單 (Gaap Daan) — Design System</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-primary:#765BFF; --c-primary-dark:#5A45D9; --c-primary-light:#ECE7FF;
+  --c-success:#03C567; --c-warning:#F81404; --c-neutral:#9E9E9E;
+  --c-bg-white:#FFFFFF; --c-bg-gray:#F2F2F2; --c-surface:#FFFFFF;
+  --c-border:#DDDDDD; --c-text-1:#333333; --c-text-2:#777777; --c-text-3:#9CA3AF;
+}
+html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","Helvetica Neue",sans-serif;background:#EEF0F3;color:var(--c-text-1);-webkit-font-smoothing:antialiased}
+
+/* animations */
+@keyframes aiPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(118,91,255,.5)}50%{transform:scale(1.15);box-shadow:0 0 0 8px rgba(118,91,255,0)}}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes scanLine{0%{top:0}100%{top:calc(100% - 2px)}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(118,91,255,.4),0 4px 12px rgba(118,91,255,.3)}50%{box-shadow:0 0 0 8px rgba(118,91,255,0),0 4px 16px rgba(118,91,255,.5)}}
+@keyframes dashMove{to{stroke-dashoffset:-12}}
+.ai-pulse{animation:aiPulse 2s ease-in-out infinite}
+.dot-pulse{animation:dotPulse 1.4s ease-in-out infinite}
+.glow-pulse{animation:glowPulse 2.4s ease-in-out infinite}
+.dashed-anim{stroke-dasharray:6 4;animation:dashMove 1s linear infinite}
+
+/* layout */
+.page{display:flex;min-height:100vh}
+.sidebar{width:280px;min-width:280px;background:#fff;border-right:1px solid var(--c-border);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;padding:20px 0}
+.sidebar::-webkit-scrollbar{width:4px}.sidebar::-webkit-scrollbar-thumb{background:#DDDDDD;border-radius:2px}
+.sb-logo{padding:0 20px 16px;border-bottom:1px solid var(--c-border);margin-bottom:12px}
+.sb-section{font-size:11px;font-weight:700;color:var(--c-text-3);letter-spacing:.08em;text-transform:uppercase;padding:14px 20px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:7px 20px;font-size:13px;color:var(--c-text-2);text-decoration:none;cursor:pointer;transition:background .15s}
+.sb-item:hover{background:var(--c-bg-gray);color:var(--c-primary)}
+.sb-id{font-size:11px;font-weight:700;color:var(--c-text-3);min-width:30px}
+.main{margin-left:0;flex:1;padding:32px 28px 80px}
+.sec-header{margin-bottom:28px;padding-bottom:14px;border-bottom:2px solid var(--c-border)}
+.sec-header h2{font-size:24px;font-weight:700}
+.sec-header p{font-size:14px;color:var(--c-text-2);margin-top:4px}
+
+.grid-screens{display:grid;grid-template-columns:repeat(3,393px);gap:56px 28px;justify-content:start;margin-bottom:48px}
+@media (max-width:1480px){.grid-screens{grid-template-columns:repeat(2,393px)}}
+@media (max-width:1020px){.grid-screens{grid-template-columns:393px}.main{margin-left:0;padding:16px}.sidebar{display:none}}
+
+.cell{display:flex;flex-direction:column;align-items:center;gap:14px}
+.meta{text-align:center}
+.fid{display:inline-block;background:var(--c-primary);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:4px;margin-bottom:6px;letter-spacing:.04em}
+.fname{display:block;font-size:13px;font-weight:600;color:var(--c-text-1)}
+.fdesc{display:block;font-size:11px;color:var(--c-text-3);margin-top:2px}
+
+/* iphone frame */
+.ph{width:393px;height:852px;background:#0a0a0a;border-radius:54px;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 0 0 2px #3A3A3C,0 0 0 4px #1C1C1E,0 30px 60px rgba(0,0,0,.3),0 12px 24px rgba(0,0,0,.16);overflow:hidden;flex-shrink:0}
+.phi{position:absolute;inset:3px;border-radius:51px;overflow:hidden;display:flex;flex-direction:column}
+.sb{height:47px;display:flex;align-items:flex-end;padding:0 24px 9px;justify-content:space-between;flex-shrink:0;position:relative;z-index:2}
+.sb-time{font-size:15px;font-weight:600;letter-spacing:-.3px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.di{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#000;border-radius:20px;z-index:1}
+.sb-ic{display:flex;align-items:center;gap:5px}
+.nav{height:44px;display:flex;align-items:center;padding:0 16px;flex-shrink:0;position:relative;background:#fff;border-bottom:1px solid var(--c-border)}
+.nav-title{position:absolute;left:50%;transform:translateX(-50%);font-size:17px;font-weight:600;white-space:nowrap}
+.content{flex:1;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;overflow:hidden}
+.home{height:34px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:2}
+.home-bar{width:134px;height:5px;background:#333333;border-radius:3px;opacity:.25}
+
+/* tokens */
+.chip{display:inline-flex;align-items:center;height:36px;padding:0 12px;border-radius:18px;font-size:13px;gap:5px;white-space:nowrap;flex-shrink:0;font-weight:500}
+.chip-blue{background:var(--c-primary);color:#fff}
+.chip-out{background:#fff;border:1.5px solid var(--c-primary);color:var(--c-primary)}
+.chip-gray{background:#fff;border:1px solid var(--c-border);color:var(--c-text-1)}
+.chip-light{background:#EFEFEF;color:var(--c-text-1)}
+.chip-sm{height:28px;padding:0 10px;font-size:12px;border-radius:14px}
+.badge-shared{display:inline-flex;align-items:center;height:20px;padding:0 7px;background:var(--c-primary-light);color:var(--c-primary);font-size:11px;font-weight:600;border-radius:10px}
+.badge-recommend{background:#FF4D4F;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.04em}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0;position:relative}
+.av-32{width:32px;height:32px;font-size:12px}
+.av-40{width:40px;height:40px;font-size:14px}
+.av-48{width:48px;height:48px;font-size:16px}
+.av-24{width:24px;height:24px;font-size:10px}
+.av-K{background:#F97316}.av-M{background:#8B5CF6}.av-Y{background:#EC4899}.av-L{background:#10B981}.av-J{background:#06B6D4}.av-V{background:#52C41A}.av-U{background:#765BFF}.av-X{background:#9E9E9E}
+.av-bot{background:linear-gradient(135deg,#765BFF 0%,#5A45D9 60%,#9580FF 100%);position:relative;overflow:hidden}
+.av-bot::after{content:"";position:absolute;top:-30%;left:-30%;width:60%;height:60%;background:radial-gradient(circle,rgba(255,255,255,.6),transparent 70%);opacity:.7}
+.bot-msg{background:#fff;border:1px solid #ECE7FF;border-left:3px solid #765BFF;border-radius:10px;padding:10px 12px;font-size:12px;line-height:1.45;color:#333333;position:relative}
+.bot-msg-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;font-weight:700;color:#765BFF;text-transform:uppercase;letter-spacing:.05em}
+.bot-sparkle{display:inline-block;animation:botPulse 2.4s ease-in-out infinite}
+@keyframes botPulse{0%,100%{transform:scale(1) rotate(0deg);opacity:1}50%{transform:scale(1.18) rotate(8deg);opacity:.85}}
+.av-dot{position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;border:2px solid #fff}
+.card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)}
+.btn-p{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:var(--c-primary);color:#fff;border-radius:8px;font-size:16px;font-weight:600;border:none;cursor:pointer}
+.btn-s{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:#fff;color:var(--c-primary);border:1.5px solid var(--c-primary);border-radius:8px;font-size:16px;font-weight:600;cursor:pointer}
+.btn-d{display:flex;align-items:center;justify-content:center;width:100%;height:52px;background:#DDDDDD;color:#9CA3AF;border-radius:8px;font-size:16px;font-weight:600;border:none}
+.money{font-variant-numeric:tabular-nums;font-weight:600}
+.mc{width:160px;height:120px;background:#fff;border-radius:12px;padding:14px 12px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1.5px solid var(--c-border);position:relative}
+.mc.sel{border-color:var(--c-primary);box-shadow:0 0 0 3px rgba(118,91,255,.1),0 1px 3px rgba(0,0,0,.06)}
+.row-item{min-height:64px;padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #EFEFEF;background:#fff}
+.row-bal{min-height:56px;padding:0 16px;display:flex;align-items:center;gap:12px}
+.ai-mark{width:18px;height:18px;background:var(--c-primary);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--c-primary)}
+.toggle{width:44px;height:26px;border-radius:13px;position:relative;flex-shrink:0;transition:background .2s}
+.toggle-on{background:var(--c-primary)}
+.toggle-off{background:#DDDDDD}
+.toggle-th{position:absolute;top:3px;width:20px;height:20px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .2s}
+.toggle-on .toggle-th{left:21px}
+.toggle-off .toggle-th{left:3px}
+.prog{height:8px;background:#DDDDDD;border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#765BFF,#9580FF);border-radius:4px}
+.fab{width:56px;height:56px;background:var(--c-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(118,91,255,.4);color:#fff;position:absolute;right:16px;bottom:24px;z-index:5}
+.tag-g{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#F6FFED;border:1px solid #B7EB8F;color:#389E0D;font-size:11px;border-radius:4px;font-weight:500}
+.tag-r{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#FFF2F0;border:1px solid #FFCCC7;color:#CF1322;font-size:11px;border-radius:4px;font-weight:500}
+.tag-gray{display:inline-flex;align-items:center;height:20px;padding:0 6px;background:#F5F5F5;border:1px solid #D9D9D9;color:#595959;font-size:11px;border-radius:4px;font-weight:500}
+.anchor{scroll-margin-top:32px}
+
+/* component library + tokens */
+.comp-section{background:#fff;border-radius:16px;padding:32px;margin-bottom:32px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}
+.comp-cell{padding:20px;background:#F8FAFC;border-radius:12px;border:1px solid var(--c-border);display:flex;flex-direction:column;gap:12px;min-height:140px}
+.comp-label{font-size:11px;font-weight:700;color:var(--c-text-3);text-transform:uppercase;letter-spacing:.06em}
+.tokens-table{width:100%;border-collapse:collapse;font-size:13px}
+.tokens-table th{background:var(--c-bg-gray);padding:10px 14px;text-align:left;font-weight:600;color:var(--c-text-2);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.tokens-table td{padding:10px 14px;border-bottom:1px solid var(--c-border)}
+.swatch{width:22px;height:22px;border-radius:5px;display:inline-block;vertical-align:middle;margin-right:8px;border:1px solid rgba(0,0,0,.08)}
+
+/* dark mode tokens for E4 */
+.dm-bg{background:#1A1A1A}.dm-surf{background:#2C2C2E}.dm-bord{border-color:#3A3A3C !important}.dm-t1{color:#FFF}.dm-t2{color:rgba(235,235,245,.6)}.dm-t3{color:rgba(235,235,245,.3)}
+
+/* ════════ AlipayHK app aesthetic ════════ */
+.ap-hero{background:linear-gradient(135deg,#E8E0FF 0%,#D4C5FF 55%,#C5B5FF 100%);border-radius:18px;padding:16px 18px;position:relative;overflow:hidden;color:#333333}
+.ap-hero-dark{background:linear-gradient(135deg,#8B7AFF 0%,#765BFF 60%,#5A45D9 100%);color:#fff}
+.ap-corner{position:absolute;top:0;right:0;background:linear-gradient(135deg,#FFD980 0%,#FFB347 100%);color:#5A3010;font-size:9px;font-weight:700;padding:4px 10px 4px 14px;border-radius:0 18px 0 14px;letter-spacing:.04em;display:flex;align-items:center;gap:3px;box-shadow:0 2px 6px rgba(255,153,0,.25)}
+.ap-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);backdrop-filter:blur(8px);border-radius:20px;padding:8px 14px;font-size:13px;color:#777777;border:1px solid rgba(255,255,255,.8)}
+.ap-pills{display:inline-flex;align-items:center;background:rgba(255,255,255,.4);backdrop-filter:blur(8px);border-radius:18px;padding:3px;gap:2px}
+.ap-pill{padding:6px 14px;border-radius:16px;font-size:12px;color:#5A3F8F;font-weight:500;cursor:pointer;transition:all .15s}
+.ap-pill.on{background:#fff;color:#765BFF;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.ap-icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 4px}
+.ap-icon-cell{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.ap-icon-wrap{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.ap-icon-lbl{font-size:10px;color:#333333;text-align:center;font-weight:500}
+.ap-tabnav{position:absolute;bottom:0;left:0;right:0;height:62px;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:flex-start;padding:6px 0 0;z-index:3}
+.ap-tabnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:#777777;cursor:pointer}
+.ap-tabnav-item.on{color:#765BFF}
+.ap-tabnav-fab{flex:1;display:flex;justify-content:center;position:relative;margin-top:-18px}
+.ap-tabnav-fab-btn{width:50px;height:50px;background:linear-gradient(135deg,#9580FF 0%,#765BFF 60%,#5A45D9 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px rgba(118,91,255,.45),inset 0 1px 0 rgba(255,255,255,.3)}
+.ap-tabnav-fab-lbl{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);font-size:10px;color:#333333;font-weight:600;white-space:nowrap}
+.ap-card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ap-brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#9580FF,#765BFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+</style>
+</head>
+
+<body>
+<div class="page">
+<main class="main">
+<!-- === SECTION 4 — 阿夾 AGENT === -->
+<div class="sec-header anchor" id="section-4">
+  <h2>Section 4 — 阿夾 ✦ The Group's Financial Co-Pilot</h2>
+  <p>The reframe: AI isn't a feature added to splitting — it's a persistent agent living in every 飯腳 group. It anticipates, mediates, audits, remembers. The split itself is just the visible 1%.</p>
+</div>
+<div class="grid-screens">
+
+<!-- ━━━━━━ FRAME J0: MEET 阿夾 (positioning) ━━━━━━ -->
+<div class="cell anchor" id="frame-j0">
+  <div class="meta"><span class="fid">FRAME J0</span><span class="fname">Meet 阿夾 ⭐ The Pitch</span><span class="fdesc">Reframe · AI as group member, not feature</span></div>
+  <div class="ph" data-sb="light">
+    <div class="phi" style="background:linear-gradient(160deg,#2A1F5C 0%,#5A45D9 50%,#765BFF 100%);color:#fff">
+      <div class="content" style="padding:24px 22px 0">
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;opacity:.7;margin-bottom:14px">THE REFRAME</div>
+        <div style="font-size:60px;line-height:1;margin-bottom:14px;filter:drop-shadow(0 4px 20px rgba(255,255,255,.3))">✦</div>
+        <div style="font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.5px">夾單 唔係加 AI 落分單。</div>
+        <div style="font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-.5px;margin-top:4px">係加咗一個 <span style="background:linear-gradient(90deg,#fff,#C8BAFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent">AI 朋友</span> 入你個 group。</div>
+
+        <div style="margin-top:18px;padding:12px 14px;background:rgba(255,255,255,.1);border-radius:10px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15)">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div class="av av-32 av-bot" style="width:28px;height:28px;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+            <div><div style="font-size:13px;font-weight:700">阿夾</div><div style="font-size:9px;opacity:.7;letter-spacing:.5px">YOUR GROUP'S CO-PILOT</div></div>
+          </div>
+          <div style="font-size:11.5px;line-height:1.5;opacity:.95">每個飯腳 group 都有佢。佢睇住你哋嘅消費，記得 Karen 食素，主動提你開單，月尾做公平度報告，仲會喺爭執時做和事佬。</div>
+        </div>
+
+        <!-- 7 capabilities -->
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">1</span><span><b>主動推斷開支</b> · 睇到你畀咗錢，識主動問</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">2</span><span><b>對話式夾單</b> · 一句話搞掂分單</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">3</span><span><b>口味記憶</b> · Karen 食素只需講一次</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">4</span><span><b>公平度報告</b> · 月底揭發潛在唔公平</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">5</span><span><b>預測性後數</b> · 揀啱嘅時機提醒結帳</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">6</span><span><b>爭執調解</b> · 用 group 過往做標準</span></div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:11px"><span style="width:22px;height:22px;background:rgba(255,255,255,.15);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0">7</span><span><b>異常偵測</b> · 守護 AlipayHK 信任</span></div>
+        </div>
+
+        <div style="margin-top:auto;padding:14px 0 18px;font-size:10px;opacity:.65;text-align:center;line-height:1.5">分單只係阿夾做緊嘅嘢嘅 1%。<br/>其餘 99% 係佢喺背後維繫住 group 嘅財務和諧。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J1: 阿夾 CHAT THREAD ━━━━━━ -->
+<div class="cell anchor" id="frame-j1">
+  <div class="meta"><span class="fid">FRAME J1</span><span class="fname">Agent Thread ⭐</span><span class="fdesc">飯腳 · 阿夾 conversation history</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <!-- nav -->
+      <div class="nav" style="background:#fff">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title" style="display:flex;align-items:center;gap:6px">
+          <div class="av av-24 av-bot"><span class="bot-sparkle" style="position:relative;z-index:1;font-size:11px">✦</span></div>
+          <span>阿夾 · 飯腳</span>
+        </div>
+        <div style="position:absolute;right:16px;font-size:11px;color:#765BFF;font-weight:600">設定</div>
+      </div>
+      <div class="content"><div class="scroll" style="padding:14px 14px 80px;display:flex;flex-direction:column;gap:10px">
+
+        <!-- date divider -->
+        <div style="text-align:center;font-size:10px;color:#777777;margin:2px 0">星期一 · 11月 8日</div>
+
+        <!-- bot msg 1 -->
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <div style="font-size:12.5px;line-height:1.45">Karen 話 <b>食素</b>，我已經記低咗。下次有肉嘅餐我會自動分返畀其他人。</div>
+            <div style="margin-top:6px;background:#F0FDF4;border-radius:6px;padding:5px 8px;font-size:10px;color:#03C567;display:inline-flex;align-items:center;gap:4px;font-weight:600">✓ 已記入 Karen 嘅口味</div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#777777;margin-left:40px">11:23</div>
+
+        <!-- user msg -->
+        <div style="display:flex;justify-content:flex-end;margin-top:4px">
+          <div style="max-width:75%;background:#765BFF;color:#fff;border-radius:12px 12px 4px 12px;padding:10px 12px;font-size:12.5px;line-height:1.45">點解阿明上次唔使畀錢？</div>
+        </div>
+        <div style="font-size:9px;color:#777777;text-align:right">你 · 11:24</div>
+
+        <!-- bot msg 2 (proactive) -->
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-top:4px">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:12px 12px 12px 4px;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <div style="font-size:12.5px;line-height:1.45">阿明上次（譚仔三哥）係付款人，所以本身已經墊咗錢，個結餘喺度顯示 <b>佢仲欠你 $245</b>。要唔要我顯示明細？</div>
+            <button style="margin-top:8px;background:#ECE7FF;color:#765BFF;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer">睇明細</button>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#777777;margin-left:40px">11:24</div>
+
+        <!-- date divider -->
+        <div style="text-align:center;font-size:10px;color:#777777;margin:8px 0 2px">今日</div>
+
+        <!-- bot msg 3 — proactive expense inference -->
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border:1.5px solid #B8AFFF;border-radius:12px 12px 12px 4px;padding:10px 12px;box-shadow:0 1px 2px rgba(0,0,0,.05);position:relative">
+            <div style="position:absolute;top:-7px;left:8px;background:#765BFF;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;letter-spacing:.04em">主動偵測</div>
+            <div style="font-size:12.5px;line-height:1.45;margin-top:3px">你頭先 7:42pm 喺 <b>海皇粥店</b> 用 AlipayHK 畀咗 <span class="money" style="color:#765BFF">$920</span>。飯腳 4 人都喺附近。<br/>要唔要我幫你開單？</div>
+            <div style="display:flex;gap:6px;margin-top:8px">
+              <button style="background:#765BFF;color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:600;cursor:pointer">好，幫我夾</button>
+              <button style="background:#fff;color:#777777;border:1px solid #DDDDDD;border-radius:8px;padding:7px 12px;font-size:11px;cursor:pointer">今次唔使</button>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:#777777;margin-left:40px">7:43pm</div>
+
+      </div></div>
+
+      <!-- chat input -->
+      <div style="position:absolute;bottom:34px;left:0;right:0;background:#fff;border-top:1px solid #DDDDDD;padding:8px 12px;display:flex;align-items:center;gap:8px">
+        <div style="flex:1;background:#F2F2F2;border-radius:18px;padding:8px 14px;font-size:13px;color:#9CA3AF">同阿夾講…</div>
+        <button style="width:36px;height:36px;background:#765BFF;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J2: CONVERSATIONAL SPLIT ━━━━━━ -->
+<div class="cell anchor" id="frame-j2">
+  <div class="meta"><span class="fid">FRAME J2</span><span class="fname">Conversational Splitting ⭐ HERO DEMO</span><span class="fdesc">Voice / one-line text → done</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <div class="nav" style="background:#fff">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title" style="display:flex;align-items:center;gap:6px">
+          <div class="av av-24 av-bot"><span class="bot-sparkle" style="position:relative;z-index:1;font-size:11px">✦</span></div>
+          <span>同阿夾講</span>
+        </div>
+      </div>
+      <div class="content"><div class="scroll" style="padding:14px 14px 0;display:flex;flex-direction:column;gap:10px">
+
+        <!-- user voice msg -->
+        <div style="display:flex;justify-content:flex-end">
+          <div style="max-width:80%;background:#765BFF;color:#fff;border-radius:14px 14px 4px 14px;padding:10px 12px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5.91-3a1 1 0 0 0-1.78.44A4.13 4.13 0 0 1 12 16a4.13 4.13 0 0 1-4.13-4.56A1 1 0 0 0 6.09 11 6.13 6.13 0 0 0 11 16.92V20H8a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2h-3v-3.08A6.13 6.13 0 0 0 17.91 11z"/></svg>
+              <div style="display:flex;align-items:center;gap:2px;height:14px">
+                <div style="width:2px;height:6px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:10px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:14px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:8px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:12px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:6px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:9px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:11px;background:#fff;border-radius:1px"></div>
+                <div style="width:2px;height:5px;background:#fff;border-radius:1px"></div>
+              </div>
+              <span style="font-size:10px;opacity:.85">0:08</span>
+            </div>
+            <div style="font-size:12px;line-height:1.45;opacity:.95">「夾單，海皇粥店 $920，我食咗炒飯仲有杯凍奶茶，其他平均分。」</div>
+          </div>
+        </div>
+
+        <!-- bot parsing -->
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div class="av av-32 av-bot" style="flex-shrink:0;font-size:13px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;background:#fff;border-radius:14px 14px 14px 4px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.05)">
+            <div style="font-size:11px;color:#765BFF;font-weight:700;letter-spacing:.05em;margin-bottom:6px">已聽到 ✓</div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <div style="font-size:12px;display:flex;justify-content:space-between"><span style="color:#777777">商戶</span><span style="font-weight:600">海皇粥店</span></div>
+              <div style="font-size:12px;display:flex;justify-content:space-between"><span style="color:#777777">總額</span><span class="money">HK$ 920</span></div>
+              <div style="font-size:12px;display:flex;justify-content:space-between"><span style="color:#777777">Group</span><span style="font-weight:600">🍽️ 飯腳 · 4 人</span></div>
+            </div>
+
+            <div style="margin-top:10px;padding-top:10px;border-top:1px dashed #DDDDDD">
+              <div style="font-size:11px;color:#777777;margin-bottom:6px">我會咁分 →</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:center;gap:6px;padding:6px;background:#ECE7FF;border-radius:6px"><div class="av av-24 av-U">你</div><span style="flex:1;font-size:11px">炒飯 + 凍奶茶 + 平均分</span><span class="money" style="font-size:12px;color:#765BFF">$285</span></div>
+                <div style="display:flex;align-items:center;gap:6px;padding:6px;background:#F2F2F2;border-radius:6px"><div class="av av-24 av-K">K</div><span style="flex:1;font-size:11px">平均分 (素食調整)</span><span class="money" style="font-size:12px">$210</span></div>
+                <div style="display:flex;align-items:center;gap:6px;padding:6px;background:#F2F2F2;border-radius:6px"><div class="av av-24 av-M">明</div><span style="flex:1;font-size:11px">平均分</span><span class="money" style="font-size:12px">$212</span></div>
+                <div style="display:flex;align-items:center;gap:6px;padding:6px;background:#F2F2F2;border-radius:6px"><div class="av av-24 av-Y">M</div><span style="flex:1;font-size:11px">平均分</span><span class="money" style="font-size:12px">$213</span></div>
+              </div>
+            </div>
+
+            <div style="margin-top:10px;padding:8px 10px;background:#F0FDF4;border-radius:8px;display:flex;align-items:center;gap:6px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#03C567"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              <span style="font-size:10.5px;color:#03C567;font-weight:500;line-height:1.4">Karen 食素，我自動由佢扣返 $75 肉嘅部份。</span>
+            </div>
+
+            <div style="display:flex;gap:6px;margin-top:10px">
+              <button style="flex:1;background:#765BFF;color:#fff;border:none;border-radius:8px;padding:9px;font-size:12px;font-weight:600;cursor:pointer">確認 · 發送請求</button>
+              <button style="background:#fff;border:1px solid #DDDDDD;color:#333333;border-radius:8px;padding:9px 12px;font-size:12px;cursor:pointer">改</button>
+            </div>
+          </div>
+        </div>
+
+      </div></div>
+
+      <!-- voice / text input -->
+      <div style="position:absolute;bottom:34px;left:0;right:0;background:#fff;border-top:1px solid #DDDDDD;padding:10px 12px;display:flex;align-items:center;gap:8px">
+        <button style="width:36px;height:36px;background:#F2F2F2;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#777777" stroke-width="2" stroke-linecap="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></button>
+        <div style="flex:1;background:#F2F2F2;border-radius:18px;padding:8px 14px;font-size:13px;color:#9CA3AF">或者 type…</div>
+        <button style="width:42px;height:42px;background:linear-gradient(135deg,#765BFF,#5A45D9);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(118,91,255,.4);animation:aiPulse 2s ease-in-out infinite">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5.91-3a1 1 0 0 0-1.78.44A4.13 4.13 0 0 1 12 16a4.13 4.13 0 0 1-4.13-4.56A1 1 0 0 0 6.09 11 6.13 6.13 0 0 0 11 16.92V20H8a1 1 0 0 0 0 2h8a1 1 0 0 0 0-2h-3v-3.08A6.13 6.13 0 0 0 17.91 11z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J3: FAIRNESS AUDIT (redesigned) ━━━━━━ -->
+<div class="cell anchor" id="frame-j3">
+  <div class="meta"><span class="fid">FRAME J3</span><span class="fname">Fairness Audit (Redesigned)</span><span class="fdesc">Signed delta · empathy guardrails · private by default</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <div class="nav" style="background:#fff">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title">公平度 · 過去 3 個月</div>
+        <div style="position:absolute;right:16px;display:flex;align-items:center;gap:5px;font-size:10px;color:#777777;background:#F2F2F2;padding:4px 8px;border-radius:8px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#777777" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>只你睇到</div>
+      </div>
+      <div class="content"><div class="scroll" style="padding:14px 14px 20px">
+
+        <!-- the hero question, not the data -->
+        <div style="text-align:center;padding:8px 8px 4px">
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.3">過去 14 餐</div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.3;color:#765BFF">夠唔夠公平？</div>
+          <div style="font-size:11.5px;color:#777777;margin-top:6px;line-height:1.5;max-width:280px;margin-left:auto;margin-right:auto">阿夾 比較咗每個人實際食咗幾錢 vs. 實際畀咗幾錢。差距越大，bar 越長。</div>
+        </div>
+
+        <!-- single signed-delta chart -->
+        <div class="card" style="margin-top:14px;padding:14px 12px">
+          <!-- axis label -->
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#9CA3AF;font-weight:600;letter-spacing:.04em;margin-bottom:14px;padding:0 10px">
+            <span>← 食少咗 · 畀多咗</span>
+            <span>食多咗 · 畀少咗 →</span>
+          </div>
+
+          <!-- 阿明: most off-balance, right side red -->
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="av av-32 av-M">明</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">阿明</div></div>
+              <div class="money" style="font-size:13px;color:#F81404;font-weight:700">+$340</div>
+            </div>
+            <!-- centered bar -->
+            <div style="position:relative;height:14px;display:flex;align-items:center;margin-left:40px">
+              <!-- axis center line -->
+              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DDDDDD"></div>
+              <!-- left half (empty) -->
+              <div style="flex:1;height:8px;background:transparent"></div>
+              <!-- right half: filled bar -->
+              <div style="flex:1;height:8px;position:relative">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:68%;background:linear-gradient(90deg,#FFCB8F,#F81404);border-radius:0 4px 4px 0;box-shadow:0 1px 3px rgba(248,20,4,.2)"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 阿May: slight right (+$120) -->
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="av av-32 av-Y">M</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">阿May</div></div>
+              <div class="money" style="font-size:13px;color:#FF9500;font-weight:600">+$120</div>
+            </div>
+            <div style="position:relative;height:14px;display:flex;align-items:center;margin-left:40px">
+              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DDDDDD"></div>
+              <div style="flex:1;height:8px;background:transparent"></div>
+              <div style="flex:1;height:8px;position:relative">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:24%;background:#FF9500;border-radius:0 4px 4px 0;opacity:.7"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Karen: balanced (±$20) -->
+          <div style="margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="av av-32 av-K">K</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Karen</div><div style="font-size:10px;color:#03C567">基本上平 ✓</div></div>
+              <div class="money" style="font-size:13px;color:#9CA3AF;font-weight:500">±$20</div>
+            </div>
+            <div style="position:relative;height:14px;display:flex;align-items:center;margin-left:40px">
+              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DDDDDD"></div>
+              <div style="flex:1;height:8px;background:transparent"></div>
+              <div style="flex:1;height:8px;position:relative">
+                <div style="position:absolute;left:0;top:0;bottom:0;width:4%;background:#03C567;border-radius:0 4px 4px 0"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 你: left, paid more -->
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+              <div class="av av-32 av-U">你</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">你</div></div>
+              <div class="money" style="font-size:13px;color:#765BFF;font-weight:700">−$320</div>
+            </div>
+            <div style="position:relative;height:14px;display:flex;align-items:center;margin-left:40px">
+              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DDDDDD"></div>
+              <div style="flex:1;height:8px;position:relative">
+                <div style="position:absolute;right:0;top:0;bottom:0;width:64%;background:linear-gradient(270deg,#B8AFFF,#765BFF);border-radius:4px 0 0 4px;box-shadow:0 1px 3px rgba(118,91,255,.2)"></div>
+              </div>
+              <div style="flex:1;height:8px;background:transparent"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI suggestion — empathy-first, message preview NOT one-tap send -->
+        <div class="card" style="margin-top:12px;padding:14px;border:1px solid #ECE7FF">
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px">
+            <div class="av av-24 av-bot" style="flex-shrink:0;width:24px;height:24px;font-size:11px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+            <div style="flex:1">
+              <div style="font-size:12px;color:#777777;line-height:1.5">阿明 嘅誤差最大。如果你想攤平，我可以同佢開個私下對話。<br/><span style="color:#9CA3AF;font-size:11px">朋友嘅事，唔急。可以下次先講，或者算數。</span></div>
+            </div>
+          </div>
+
+          <!-- ↓ MESSAGE PREVIEW: see exactly what 阿夾 will say BEFORE you commit -->
+          <div style="background:#FAFAFF;border-left:3px solid #765BFF;border-radius:6px;padding:10px 12px;margin-top:8px">
+            <div style="font-size:9px;font-weight:700;color:#765BFF;letter-spacing:.05em;margin-bottom:4px">私訊預覽 · 發畀阿明</div>
+            <div style="font-size:11.5px;color:#333333;line-height:1.5;font-style:italic">「Hi 阿明 ✦ 過去 3 個月你食得幾豐富嘛 😄 阿夾 計過你應該補返 ~$340。下次食嗰陣你嚟畀就得，唔急 ❤️」</div>
+            <div style="margin-top:6px;font-size:10px;color:#9CA3AF">阿May、Karen、你 唔會見到呢個訊息</div>
+          </div>
+
+          <!-- guardrail: language + nuclear options -->
+          <div style="margin-top:10px">
+            <div style="font-size:10px;color:#777777;margin-bottom:6px">語氣</div>
+            <div style="display:flex;gap:5px;margin-bottom:10px">
+              <span style="padding:5px 10px;font-size:11px;background:#ECE7FF;color:#765BFF;border-radius:12px;font-weight:600">輕鬆 (預設)</span>
+              <span style="padding:5px 10px;font-size:11px;background:#fff;color:#777777;border:1px solid #DDDDDD;border-radius:12px">直接</span>
+              <span style="padding:5px 10px;font-size:11px;background:#fff;color:#777777;border:1px solid #DDDDDD;border-radius:12px">改寫…</span>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button style="flex:1;height:38px;background:#765BFF;color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer">發送私訊</button>
+              <button style="flex:1;height:38px;background:#fff;color:#333333;border:1px solid #DDDDDD;border-radius:10px;font-size:12px;cursor:pointer">下次先講</button>
+              <button style="height:38px;padding:0 12px;background:#fff;color:#9CA3AF;border:1px solid #DDDDDD;border-radius:10px;font-size:12px;cursor:pointer">算數</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- privacy footer with toggle -->
+        <div style="margin-top:14px;background:#F0FDF4;border-radius:10px;padding:10px 12px;display:flex;gap:8px;align-items:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#03C567" stroke-width="2" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div style="flex:1;font-size:10.5px;color:#03C567;line-height:1.45">公平度報告淨係你睇到。阿夾 唔會主動通知任何人，除非你按發送。</div>
+        </div>
+
+        <div style="margin-top:8px;font-size:10px;color:#9CA3AF;text-align:center">下個月唔想睇？<span style="color:#765BFF;font-weight:600;text-decoration:underline;margin-left:2px">關閉公平度功能</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J4: PROACTIVE EXPENSE INFERENCE ━━━━━━ -->
+<div class="cell anchor" id="frame-j4">
+  <div class="meta"><span class="fid">FRAME J4</span><span class="fname">Proactive Inference ⭐ Killer Feature</span><span class="fdesc">Push → sheet · AI anticipates</span></div>
+  <div class="ph" data-sb="light">
+    <div class="phi" style="background:linear-gradient(180deg,#1a1a1a 0%,#2C2C2E 100%)">
+      <div class="content" style="position:relative">
+
+        <!-- iOS push notification (top) -->
+        <div style="position:absolute;top:60px;left:10px;right:10px;background:rgba(50,50,52,.92);backdrop-filter:blur(20px);border-radius:18px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:2">
+          <div class="av av-40 av-bot" style="flex-shrink:0;font-size:16px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="flex:1;min-width:0;color:#fff">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+              <span style="font-size:12px;font-weight:600">阿夾 (AlipayHK)</span>
+              <span style="font-size:10px;opacity:.5;margin-left:auto">而家</span>
+            </div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px">你頭先喺海皇粥店畀咗 $920</div>
+            <div style="font-size:12px;opacity:.85;line-height:1.4">飯腳 4 人都喺附近 · 要唔要而家夾單？</div>
+          </div>
+        </div>
+
+        <!-- background phone wallpaper hint (dim) -->
+        <div style="opacity:.15;padding:120px 20px 0;color:#fff;text-align:center">
+          <div style="font-size:80px;font-weight:200">7:43</div>
+          <div style="font-size:16px;margin-top:8px">11月 11日 星期二</div>
+        </div>
+
+        <!-- bottom sheet (the in-app side) -->
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:20px 20px 0 0;padding:16px;box-shadow:0 -8px 24px rgba(0,0,0,.3)">
+          <div style="width:36px;height:4px;background:#DDDDDD;border-radius:2px;margin:0 auto 12px"></div>
+
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <div class="av av-40 av-bot" style="flex-shrink:0;font-size:16px"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+            <div style="flex:1">
+              <div style="font-size:14px;font-weight:700">我留意到呢筆交易…</div>
+              <div style="font-size:11px;color:#777777">基於時間 · 商戶 · group 位置</div>
+            </div>
+            <span style="background:#765BFF;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.04em">AI 推斷</span>
+          </div>
+
+          <!-- transaction card -->
+          <div style="background:#F2F2F2;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:center;margin-bottom:10px">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#FFD699,#FF9F45);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">海皇</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">海皇粥店</div><div style="font-size:11px;color:#777777">尖沙咀 · 7:42pm · AlipayHK 付款</div></div>
+            <div class="money" style="font-size:16px">$920</div>
+          </div>
+
+          <!-- AI inference reasoning -->
+          <div style="background:#FAFAFF;border-left:3px solid #765BFF;border-radius:6px;padding:10px 12px;margin-bottom:12px">
+            <div style="font-size:11px;font-weight:700;color:#765BFF;margin-bottom:6px">點解我估係飯腳？</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:#333333;line-height:1.45">
+              <div>· 餐廳類型同飯腳過往 12 餐配對</div>
+              <div>· 4 人晚飯時段，匹配 group 大小</div>
+              <div>· 金額 $920 / 4 人 = $230，係你哋平均餐費 ±$30</div>
+              <div>· 阿明、Karen、阿May 上線狀態：附近</div>
+            </div>
+          </div>
+
+          <!-- group selector -->
+          <div style="font-size:11px;font-weight:700;color:#777777;margin-bottom:6px">分入邊個 group</div>
+          <div style="display:flex;gap:6px;margin-bottom:14px">
+            <div style="flex:1;border:1.5px solid #765BFF;background:#ECE7FF;border-radius:10px;padding:8px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:18px">🍽️</span>
+              <div style="flex:1"><div style="font-size:12px;font-weight:700">飯腳</div><div style="font-size:10px;color:#765BFF">推薦 · 96%</div></div>
+              <div style="width:16px;height:16px;border-radius:50%;background:#765BFF;display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+            </div>
+            <div style="flex:1;border:1px solid #DDDDDD;border-radius:10px;padding:8px;display:flex;align-items:center;gap:6px">
+              <span style="font-size:18px">💼</span>
+              <div style="flex:1"><div style="font-size:12px;font-weight:600">同事</div><div style="font-size:10px;color:#777777">3%</div></div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn-p" style="height:44px;font-size:14px">幫我夾單 · 用 AI 分</button>
+            <div style="display:flex;gap:8px">
+              <button class="btn-s" style="flex:1;height:36px;font-size:12px">手動開單</button>
+              <button style="flex:1;height:36px;background:none;border:none;color:#777777;font-size:12px;cursor:pointer">今次唔使</button>
+            </div>
+          </div>
+
+          <div style="margin-top:10px;text-align:center;font-size:10px;color:#9CA3AF">阿夾 只係問，唔會自動扣錢</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J5: AI MEDIATION ━━━━━━ -->
+<div class="cell anchor" id="frame-j5">
+  <div class="meta"><span class="fid">FRAME J5</span><span class="fname">AI Mediation</span><span class="fdesc">Dispute · 阿夾 cites group precedent</span></div>
+  <div class="ph">
+    <div class="phi" style="background:#F2F2F2">
+      <div class="nav" style="background:#fff">
+        <div style="color:#765BFF"><svg width="11" height="20" viewBox="0 0 11 20" fill="none"><path d="M10 18L2 10L10 2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="nav-title">爭議調解</div>
+      </div>
+      <div class="content"><div class="scroll" style="padding:14px 14px 20px">
+
+        <!-- the dispute -->
+        <div class="card" style="padding:14px;border-left:3px solid #F81404">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <div class="av av-32 av-K">K</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">Karen 提出異議</div><div style="font-size:10px;color:#777777">海皇粥店 · 啱啱</div></div>
+          </div>
+          <div style="font-size:12px;color:#333333;line-height:1.4">「我冇食 <b>叉燒包 ×1</b>，唔該幫我除返。」</div>
+          <div style="margin-top:6px;background:#FFF2F0;border-radius:6px;padding:6px 8px;font-size:11px;color:#F81404">爭議金額 HK$ 50</div>
+        </div>
+
+        <!-- 阿夾 mediator -->
+        <div style="margin-top:14px;background:linear-gradient(135deg,#ECE7FF 0%,#F5F2FF 100%);border-radius:14px;padding:14px;position:relative">
+          <div style="position:absolute;top:-9px;left:14px;background:#765BFF;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.04em">阿夾 調解中 ✦</div>
+          <div style="margin-top:6px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">我查咗你哋過往</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;line-height:1.45">9月 · <b>Karen 冇食牛肉</b> → 攤分畀阿明同你 ✓</div>
+              <div style="background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;line-height:1.45">10月 · <b>阿明 冇食辣</b> → 攤分畀其他 3 人 ✓</div>
+              <div style="background:#fff;border-radius:8px;padding:8px 10px;font-size:11px;line-height:1.45">11月 · 今次 <b>Karen 冇食叉燒包</b></div>
+            </div>
+            <div style="margin-top:10px;padding:10px;background:#fff;border-radius:8px;border:1.5px dashed #765BFF">
+              <div style="font-size:11px;color:#765BFF;font-weight:700;margin-bottom:4px">我建議</div>
+              <div style="font-size:12px;color:#333333;line-height:1.45">將 $50 平均攤分畀 <b>阿明 + 阿May + 你</b>，每人多畀 $16.7。</div>
+              <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px;font-size:11px;color:#777777">
+                <div>· 阿明 $213 → $230</div>
+                <div>· 阿May $213 → $230</div>
+                <div>· 你 $285 → $302</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- consensus voting -->
+        <div style="margin-top:14px">
+          <div style="font-size:11px;font-weight:700;color:#777777;margin-bottom:8px">大家投票</div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <div style="flex:1;background:#fff;border-radius:10px;padding:8px;display:flex;align-items:center;gap:6px"><div class="av av-24 av-M">明</div><span style="flex:1;font-size:11px">阿明</span><span style="font-size:10px;color:#03C567;font-weight:600">✓ 同意</span></div>
+            <div style="flex:1;background:#fff;border-radius:10px;padding:8px;display:flex;align-items:center;gap:6px"><div class="av av-24 av-Y">M</div><span style="flex:1;font-size:11px">阿May</span><span style="font-size:10px;color:#9CA3AF">等緊</span></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn-p" style="flex:1;height:40px;font-size:12px;background:#03C567">同意 · 用阿夾建議</button>
+            <button class="btn-s" style="flex:1;height:40px;font-size:12px;border-color:#DDDDDD;color:#333333">我想改</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px;font-size:10px;color:#9CA3AF;text-align:center;line-height:1.5">3 人都按「同意」之後先會生效 · 阿夾 唔會單方面改動</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━━ FRAME J6: 阿夾 ONBOARDING ━━━━━━ -->
+<div class="cell anchor" id="frame-j6">
+  <div class="meta"><span class="fid">FRAME J6</span><span class="fname">阿夾 Onboarding</span><span class="fdesc">Permissions · personality · trust</span></div>
+  <div class="ph">
+    <div class="phi" style="background:linear-gradient(180deg,#ECE7FF 0%,#fff 40%)">
+      <div class="content"><div class="scroll" style="padding:24px 18px 20px">
+
+        <!-- hero avatar -->
+        <div style="text-align:center;margin-bottom:18px">
+          <div class="av av-bot" style="width:72px;height:72px;font-size:32px;margin:0 auto 12px;box-shadow:0 8px 24px rgba(118,91,255,.35)"><span class="bot-sparkle" style="position:relative;z-index:1">✦</span></div>
+          <div style="font-size:11px;letter-spacing:2px;color:#765BFF;font-weight:700;margin-bottom:6px">介紹你識</div>
+          <div style="font-size:24px;font-weight:800;letter-spacing:-.5px">阿夾</div>
+          <div style="font-size:13px;color:#777777;margin-top:4px;line-height:1.5;max-width:300px;margin-left:auto;margin-right:auto">飯腳 group 嘅 AI 共同管理員。佢幫你記住、提醒、調解，等你哋專心食。</div>
+        </div>
+
+        <!-- what 阿夾 will do -->
+        <div style="background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+          <div style="font-size:12px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">阿夾 會做嘅嘢</div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EFEFEF">
+            <div style="width:30px;height:30px;background:#ECE7FF;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">📡</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">偵測 AlipayHK 交易</div><div style="font-size:10px;color:#777777">睇到你畀錢時主動問你開唔開單</div></div>
+            <div class="toggle toggle-on"><div class="toggle-th"></div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EFEFEF">
+            <div style="width:30px;height:30px;background:#ECE7FF;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">🧠</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">記住口味同習慣</div><div style="font-size:10px;color:#777777">食素、戒酒、敏感食物等等</div></div>
+            <div class="toggle toggle-on"><div class="toggle-th"></div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EFEFEF">
+            <div style="width:30px;height:30px;background:#ECE7FF;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">📊</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">月度公平度報告</div><div style="font-size:10px;color:#777777">睇邊個食多咗或者畀少咗</div></div>
+            <div class="toggle toggle-on"><div class="toggle-th"></div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #EFEFEF">
+            <div style="width:30px;height:30px;background:#ECE7FF;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">🤝</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">爭議調解</div><div style="font-size:10px;color:#777777">睇返 group 過往做標準</div></div>
+            <div class="toggle toggle-on"><div class="toggle-th"></div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+            <div style="width:30px;height:30px;background:#FFF2F0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">🛡️</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">異常交易守護</div><div style="font-size:10px;color:#777777">凌晨高金額 · 陌生商戶會提示</div></div>
+            <div class="toggle toggle-on"><div class="toggle-th"></div></div>
+          </div>
+        </div>
+
+        <!-- personality -->
+        <div style="margin-top:14px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+          <div style="font-size:12px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">阿夾 嘅語氣</div>
+          <div style="display:flex;gap:6px">
+            <div style="flex:1;padding:10px 6px;border:1.5px solid #DDDDDD;border-radius:10px;text-align:center"><div style="font-size:20px;margin-bottom:2px">😄</div><div style="font-size:11px">活潑</div></div>
+            <div style="flex:1;padding:10px 6px;border:1.5px solid #765BFF;background:#ECE7FF;border-radius:10px;text-align:center"><div style="font-size:20px;margin-bottom:2px">🙂</div><div style="font-size:11px;color:#765BFF;font-weight:600">中性</div></div>
+            <div style="flex:1;padding:10px 6px;border:1.5px solid #DDDDDD;border-radius:10px;text-align:center"><div style="font-size:20px;margin-bottom:2px">😐</div><div style="font-size:11px">簡潔</div></div>
+          </div>
+        </div>
+
+        <!-- privacy note -->
+        <div style="margin-top:14px;background:#F0FDF4;border-radius:10px;padding:10px 12px;display:flex;gap:8px;align-items:flex-start">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#03C567" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#03C567;margin-bottom:2px">資料只留喺 group 內</div>
+            <div style="font-size:10.5px;color:#333333;line-height:1.4">阿夾 學到嘅嘢只用喺呢個飯腳 group · 唔會分享到其他 group · 隨時可以清除記憶。</div>
+          </div>
+        </div>
+
+        <button class="btn-p" style="margin-top:14px;background:linear-gradient(135deg,#765BFF,#5A45D9);box-shadow:0 4px 14px rgba(118,91,255,.4)">歡迎 阿夾 加入飯腳 ✦</button>
+        <div style="text-align:center;margin-top:8px;font-size:11px;color:#777777"><span style="text-decoration:underline">而家唔加</span> · 之後可以再開</div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+</main>
+</div>
+<script>
+// Inject status bar + home indicator into every phone frame
+const SVG_SIG = '<svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="8" width="3" height="3" rx=".5"/><rect x="4.5" y="5.5" width="3" height="5.5" rx=".5"/><rect x="9" y="2.5" width="3" height="8.5" rx=".5"/><rect x="13.5" y="0" width="3" height="11" rx=".5"/></svg>';
+const SVG_WIFI = '<svg width="16" height="11" viewBox="0 0 16 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 3.6a10 10 0 0 1 14 0"/><path d="M3.5 6.4a6.5 6.5 0 0 1 9 0"/><path d="M6 9.2a3 3 0 0 1 4 0"/><circle cx="8" cy="10.2" r=".5" fill="currentColor" stroke="none"/></svg>';
+const SVG_BAT = '<svg width="25" height="12" viewBox="0 0 25 12"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" stroke-opacity=".4" fill="none"/><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="currentColor" fill-opacity=".4"/><rect x="2" y="2" width="17" height="8" rx="1.5" fill="currentColor"/></svg>';
+
+document.querySelectorAll('.ph').forEach(p=>{
+  const inner = p.querySelector('.phi');
+  if(!inner) return;
+  const light = p.dataset.sb === 'light';
+  const c = light ? '#fff' : '#333333';
+  const sb = `<div class="sb" style="color:${c}"><span class="sb-time">9:41</span><div class="di"></div><div class="sb-ic">${SVG_SIG}${SVG_WIFI}${SVG_BAT}</div></div>`;
+  const home = `<div class="home"><div class="home-bar" style="background:${light?'rgba(255,255,255,.5)':'#333333'};opacity:${light?'.6':'.25'}"></div></div>`;
+  inner.insertAdjacentHTML('afterbegin', sb);
+  inner.insertAdjacentHTML('beforeend', home);
+});
+</script>
+</body>
+</html>
+
+</body>
+</html>
