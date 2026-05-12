@@ -337,6 +337,291 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans 
 </div>
 </div>
 
+<!-- ━━━━━━ C2 · 微觀美學 ━━━━━━ -->
+<div id="frame-c2" class="anchor comp-section" style="margin-top:32px">
+  <h3 style="font-size:18px;font-weight:800;margin-bottom:4px">C2 · Micro-Aesthetics</h3>
+  <p style="font-size:13px;color:#777777;margin-bottom:28px">The invisible polish — shadow depth, motion timing, typographic grain, chromatic layering, tactile states</p>
+
+  <!-- ① SURFACE HIERARCHY -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">① Surface Hierarchy — Elevation Scale</div>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="width:100px;height:60px;background:#F2F2F2;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#9CA3AF;font-weight:700">0</div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">Page BG<br>#F2F2F2</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="width:100px;height:60px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#777;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)">1</div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">Resting card<br><code style="font-size:9px">dp:1</code></span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="width:100px;height:60px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#777;font-weight:700;box-shadow:0 4px 6px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.06)">2</div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">Raised card<br><code style="font-size:9px">dp:4</code></span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="width:100px;height:60px;background:linear-gradient(135deg,#9580FF,#765BFF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;box-shadow:0 8px 16px rgba(118,91,255,.35),0 4px 8px rgba(118,91,255,.2)">3</div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">FAB / Floating<br><code style="font-size:9px">dp:8 + tint</code></span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="width:100px;height:60px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#777;font-weight:700;box-shadow:0 20px 40px rgba(0,0,0,.15),0 8px 16px rgba(0,0,0,.08)">4</div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">Modal / Sheet<br><code style="font-size:9px">dp:20</code></span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+        <div style="position:relative;width:100px;height:60px;border-radius:12px;overflow:hidden">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,#D4C5FF,#9580FF)"></div>
+          <div style="position:absolute;inset:0;background:rgba(255,255,255,.55);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.8);display:flex;align-items:center;justify-content:center;font-size:11px;color:#5A45D9;font-weight:700">5</div>
+        </div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center">Frosted glass<br><code style="font-size:9px">blur:12px</code></span>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:#9CA3AF;line-height:1.6">Shadow rule: <b style="color:#333">ambient layer</b> (large, low opacity) + <b style="color:#333">key layer</b> (small, higher opacity). Tinted shadows on purple surfaces only — never on white cards.</div>
+  </div>
+
+  <!-- ② MOTION VOCABULARY -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">② Motion Vocabulary — Easing + Duration Tokens</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px">
+      <div style="background:#F8FAFC;border:1px solid var(--c-border);border-radius:12px;padding:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:700">snap</span>
+          <span style="font-size:11px;font-weight:700;color:#765BFF;background:#ECE7FF;padding:2px 8px;border-radius:10px">100ms</span>
+        </div>
+        <!-- visual ease curve approximation: fast start, short travel -->
+        <div style="height:32px;position:relative;margin-bottom:8px">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#EFEFEF;border-radius:2px"></div>
+          <svg viewBox="0 0 120 30" width="120" height="30" style="position:absolute;bottom:0;left:0"><path d="M0 28 Q80 28 100 4 L118 2" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-size:10px;color:#777;line-height:1.6"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px">ease-out</code><br>Toggle on/off · Tab tap · Icon press</div>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid var(--c-border);border-radius:12px;padding:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:700">smooth</span>
+          <span style="font-size:11px;font-weight:700;color:#765BFF;background:#ECE7FF;padding:2px 8px;border-radius:10px">250ms</span>
+        </div>
+        <div style="height:32px;position:relative;margin-bottom:8px">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#EFEFEF;border-radius:2px"></div>
+          <svg viewBox="0 0 120 30" width="120" height="30" style="position:absolute;bottom:0;left:0"><path d="M0 28 C40 28 60 4 118 2" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-size:10px;color:#777;line-height:1.6"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px">cubic-bezier(.4,0,.2,1)</code><br>Sheet slide-up · Card expand · Modal enter</div>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid var(--c-border);border-radius:12px;padding:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:700">spring</span>
+          <span style="font-size:11px;font-weight:700;color:#03C567;background:#F6FFED;padding:2px 8px;border-radius:10px">400ms</span>
+        </div>
+        <div style="height:32px;position:relative;margin-bottom:8px">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#EFEFEF;border-radius:2px"></div>
+          <!-- overshoot curve -->
+          <svg viewBox="0 0 120 36" width="120" height="36" style="position:absolute;bottom:0;left:0"><path d="M0 34 C30 34 50 4 80 1 C95 -3 105 5 118 4" fill="none" stroke="#03C567" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div style="font-size:10px;color:#777;line-height:1.6"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px">cubic-bezier(.34,1.56,.64,1)</code><br>Success burst · FAB bounce · Confetti pop</div>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid var(--c-border);border-radius:12px;padding:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:700">breathe</span>
+          <span style="font-size:11px;font-weight:700;color:#9CA3AF;background:#F5F5F5;padding:2px 8px;border-radius:10px">2 400ms ∞</span>
+        </div>
+        <div style="height:32px;position:relative;margin-bottom:8px">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:#EFEFEF;border-radius:2px"></div>
+          <svg viewBox="0 0 120 30" width="120" height="30" style="position:absolute;bottom:0;left:0"><path d="M0 16 C20 28 40 4 60 16 C80 28 100 4 120 16" fill="none" stroke="#765BFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 3"/></svg>
+        </div>
+        <div style="font-size:10px;color:#777;line-height:1.6"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px">ease-in-out infinite</code><br>阿夾 sparkle · AI pulse · Loading skeleton</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:#9CA3AF;line-height:1.6">Duration asymmetry: <b style="color:#333">enter = smooth or spring</b> (longer, feels considered) · <b style="color:#333">exit = snap or 150ms ease-in</b> (shorter, gets out of the way). Never animate two unrelated things simultaneously.</div>
+  </div>
+
+  <!-- ③ TYPOGRAPHIC GRAIN -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">③ Typographic Grain — Scale, Weight Contrast, CJK Rendering</div>
+    <div style="background:#F8FAFC;border:1px solid var(--c-border);border-radius:12px;overflow:hidden">
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="background:#F2F2F2"><th style="padding:9px 14px;text-align:left;font-size:11px;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #E5E7EB">Role</th><th style="padding:9px 14px;text-align:left;font-size:11px;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #E5E7EB">Size / Wt / Track</th><th style="padding:9px 14px;text-align:left;font-size:11px;color:#777;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #E5E7EB">Live Preview</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #EFEFEF"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Display</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">34px 800 −1.0px</code></td><td style="padding:10px 14px"><span style="font-size:34px;font-weight:800;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums">$920</span></td></tr>
+          <tr style="border-bottom:1px solid #EFEFEF;background:#FAFAFA"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Title 1</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">24px 700 −0.5px</code></td><td style="padding:10px 14px"><span style="font-size:24px;font-weight:700;letter-spacing:-.5px">夾單分帳</span></td></tr>
+          <tr style="border-bottom:1px solid #EFEFEF"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Title 2</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">18px 700 −0.3px</code></td><td style="padding:10px 14px"><span style="font-size:18px;font-weight:700;letter-spacing:-.3px">海皇粥店</span></td></tr>
+          <tr style="border-bottom:1px solid #EFEFEF;background:#FAFAFA"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Body 1</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">15px 400 0</code></td><td style="padding:10px 14px"><span style="font-size:15px">蝦餃 × 2 · 腸粉 · 例湯</span></td></tr>
+          <tr style="border-bottom:1px solid #EFEFEF"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Caption</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">11px 400 +.04em</code></td><td style="padding:10px 14px"><span style="font-size:11px;color:#777;letter-spacing:.04em">今日 · 7:42 PM · 海皇粥店</span></td></tr>
+          <tr style="border-bottom:1px solid #EFEFEF;background:#FAFAFA"><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Label</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">11px 700 +.08em UC</code></td><td style="padding:10px 14px"><span style="font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;text-transform:uppercase">Section Title</span></td></tr>
+          <tr><td style="padding:10px 14px;font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap">Mono / Amount</td><td style="padding:10px 14px;font-size:11px;color:#777"><code style="background:#F2F2F2;padding:1px 5px;border-radius:3px;font-size:10px">tabular-nums 600</code></td><td style="padding:10px 14px"><span class="money" style="font-size:17px">HK$ 245.00 → $80.00</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:#F0F4FF;border-radius:8px;font-size:11px;color:#5A45D9;line-height:1.65">
+      <b>CJK mixing rule:</b> PingFang TC renders at ×1.1 visual weight vs SF Pro — use <code style="background:#E8E4FF;padding:1px 4px;border-radius:3px">font-weight:500</code> on mixed-script runs to balance.&ensp;Always <code style="background:#E8E4FF;padding:1px 4px;border-radius:3px">font-variant-numeric:tabular-nums</code> for aligned money columns. Tight negative tracking (−0.3px to −1.0px) is a trust signal — it reads "financial precision."
+    </div>
+  </div>
+
+  <!-- ④ BORDER RADIUS SCALE -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">④ Border Radius Scale — Corner Grammar</div>
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:64px;height:28px;background:#ECE7FF;border-radius:4px"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>4px</b><br>Tags · badges</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:68px;height:36px;background:linear-gradient(135deg,#9580FF,#765BFF);border-radius:8px"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>8px</b><br>Buttons · inputs</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:74px;height:40px;background:#F2F2F2;border:1.5px solid #DDDDDD;border-radius:10px"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>10px</b><br>Chat bubbles</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:80px;height:48px;background:#fff;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.08)"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>12px</b><br>Cards</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:80px;height:48px;background:#fff;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,.06)"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>14px</b><br>App cards</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:88px;height:52px;background:linear-gradient(135deg,#E8E0FF,#C5B5FF);border-radius:18px"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>18px</b><br>Hero cards</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:88px;height:34px;background:#765BFF;border-radius:20px;display:flex;align-items:center;justify-content:center"><span style="font-size:12px;color:#fff;font-weight:600">確認</span></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>20px</b><br>Pill buttons</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+        <div style="width:44px;height:90px;background:#0a0a0a;border-radius:54px;box-shadow:0 0 0 2px #3A3A3C,0 4px 12px rgba(0,0,0,.3)"></div>
+        <span style="font-size:10px;color:#9CA3AF;text-align:center"><b>54px</b><br>iPhone outer</span>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:#9CA3AF;line-height:1.6">Corner grammar: rounder = softer, more personal (cards, hero). Tighter = functional precision (tags, buttons). Never mix radii levels within a single component — pick one step and hold it.</div>
+  </div>
+
+  <!-- ⑤ CHROMATIC DEPTH -->
+  <div style="margin-bottom:36px">
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">⑤ Chromatic Depth — Purple Spectrum, Gradient DNA, Opacity Surfaces</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <!-- spectrum strip -->
+      <div>
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Primary Spectrum — 6 steps</div>
+        <div style="display:flex;border-radius:10px;overflow:hidden;height:52px">
+          <div style="flex:1;background:#ECE7FF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px"><span style="font-size:8px;font-weight:700;color:#765BFF">Light</span><span style="font-size:8px;color:#9580FF">#ECE7FF</span></div>
+          <div style="flex:1;background:#C5B5FF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px"><span style="font-size:8px;font-weight:700;color:#5A45D9">Tint</span><span style="font-size:8px;color:#5A45D9">#C5B5FF</span></div>
+          <div style="flex:1;background:#9580FF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px"><span style="font-size:8px;font-weight:700;color:#fff">Mid</span><span style="font-size:8px;color:rgba(255,255,255,.8)">#9580FF</span></div>
+          <div style="flex:1;background:#765BFF;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;border-left:2px solid rgba(255,255,255,.3);border-right:2px solid rgba(255,255,255,.3)"><span style="font-size:8px;font-weight:800;color:#fff;letter-spacing:.06em">PRIMARY</span><span style="font-size:8px;color:rgba(255,255,255,.8)">#765BFF</span></div>
+          <div style="flex:1;background:#5A45D9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px"><span style="font-size:8px;font-weight:700;color:#fff">Dark</span><span style="font-size:8px;color:rgba(255,255,255,.7)">#5A45D9</span></div>
+          <div style="flex:1;background:#3D2FA8;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px"><span style="font-size:8px;font-weight:700;color:#fff">Deeper</span><span style="font-size:8px;color:rgba(255,255,255,.6)">#3D2FA8</span></div>
+        </div>
+      </div>
+      <!-- gradient vocabulary -->
+      <div>
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Gradient DNA — named roles</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <div style="flex:1;min-width:180px;height:40px;border-radius:10px;background:linear-gradient(135deg,#9580FF 0%,#765BFF 60%,#5A45D9 100%);display:flex;align-items:center;padding:0 14px"><span style="font-size:10px;font-weight:700;color:#fff">FAB · Bot avatar · CTA  135°</span></div>
+          <div style="flex:1;min-width:180px;height:40px;border-radius:10px;background:linear-gradient(135deg,#E8E0FF 0%,#D4C5FF 55%,#C5B5FF 100%);display:flex;align-items:center;padding:0 14px"><span style="font-size:10px;font-weight:700;color:#5A45D9">Hero card (ap-hero)  135°</span></div>
+          <div style="flex:1;min-width:180px;height:40px;border-radius:10px;background:linear-gradient(135deg,#FFD980 0%,#FFB347 100%);display:flex;align-items:center;padding:0 14px"><span style="font-size:10px;font-weight:700;color:#5A3010">Corner badge · reward  135°</span></div>
+          <div style="flex:1;min-width:180px;height:40px;border-radius:10px;background:linear-gradient(90deg,#765BFF,#9580FF);display:flex;align-items:center;padding:0 14px"><span style="font-size:10px;font-weight:700;color:#fff">Progress bar · fill  90°</span></div>
+          <div style="flex:1;min-width:180px;height:40px;border-radius:10px;background:radial-gradient(120% 70% at 50% 0%,#FFF4D9 0%,#ECE7FF 35%,#F2F2F2 75%);display:flex;align-items:center;padding:0 14px"><span style="font-size:10px;font-weight:700;color:#5A45D9">Settle success BG  radial</span></div>
+        </div>
+      </div>
+      <!-- opacity surfaces -->
+      <div>
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Opacity Surfaces — layering without new hues</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <div style="position:relative;flex:1;min-width:180px;height:44px;background:linear-gradient(135deg,#9580FF,#765BFF);border-radius:10px;overflow:hidden">
+            <div style="position:absolute;inset:0;background:rgba(255,255,255,.4);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:#5A45D9">rgba(255,255,255,.40) — frosted search</span></div>
+          </div>
+          <div style="flex:1;min-width:180px;height:44px;background:#fff;border:1.5px solid rgba(118,91,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:#9580FF">rgba(118,91,255,.15) — AI card border</span></div>
+          <div style="flex:1;min-width:180px;height:44px;background:#fff;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:#9CA3AF">rgba(0,0,0,.04–.06) — card shadow</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑥ TOUCH CHOREOGRAPHY -->
+  <div>
+    <div style="font-size:13px;font-weight:700;color:#777777;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">⑥ Touch Choreography — States, Swipe, Typing Breath</div>
+    <div style="display:flex;flex-wrap:wrap;gap:28px">
+      <!-- button lifecycle -->
+      <div style="flex:1;min-width:280px">
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Button State Sequence</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <button class="btn-p" style="width:86px;height:40px;font-size:13px;border-radius:8px">確認</button>
+            <span style="font-size:9px;color:#9CA3AF">Rest</span>
+          </div>
+          <span style="color:#DDDDDD">→</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <button class="btn-p" style="width:86px;height:40px;font-size:13px;border-radius:8px;transform:scale(.97);filter:brightness(.88)">確認</button>
+            <span style="font-size:9px;color:#9CA3AF">Pressed<br>scale .97</span>
+          </div>
+          <span style="color:#DDDDDD">→</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <button class="btn-p" style="width:86px;height:40px;font-size:13px;border-radius:8px;opacity:.6;display:flex;align-items:center;justify-content:center;gap:5px">
+              <div style="width:6px;height:6px;background:#fff;border-radius:50%;animation:dotPulse 1.4s .0s infinite ease-in-out"></div>
+              <div style="width:6px;height:6px;background:#fff;border-radius:50%;animation:dotPulse 1.4s .25s infinite ease-in-out"></div>
+              <div style="width:6px;height:6px;background:#fff;border-radius:50%;animation:dotPulse 1.4s .5s infinite ease-in-out"></div>
+            </button>
+            <span style="font-size:9px;color:#9CA3AF">Loading<br>opacity .60</span>
+          </div>
+          <span style="color:#DDDDDD">→</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <button style="width:86px;height:40px;font-size:13px;border-radius:8px;background:#03C567;color:#fff;border:none;font-weight:600;transform:scale(1.04);box-shadow:0 4px 12px rgba(3,197,103,.4)">✓ 完成</button>
+            <span style="font-size:9px;color:#9CA3AF">Success<br>scale 1.04</span>
+          </div>
+        </div>
+      </div>
+      <!-- swipe reveal -->
+      <div style="flex:1;min-width:240px">
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Row Swipe-to-Action</div>
+        <div style="border-radius:12px;overflow:hidden;max-width:300px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+          <div style="background:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #EFEFEF">
+            <div class="av av-32 av-M">明</div>
+            <div style="flex:1"><div style="font-size:13px;font-weight:600">阿明</div><div style="font-size:11px;color:#777">欠你 HK$ 245</div></div>
+            <span style="font-size:10px;color:#9CA3AF">← swipe</span>
+          </div>
+          <div style="position:relative;background:#fff">
+            <div style="padding:12px 70px 12px 14px;display:flex;align-items:center;gap:10px">
+              <div class="av av-32 av-K">K</div>
+              <div style="flex:1"><div style="font-size:13px;font-weight:600">Karen</div><div style="font-size:11px;color:#F81404;font-weight:500">你欠佢 HK$ 80</div></div>
+            </div>
+            <div style="position:absolute;right:0;top:0;bottom:0;width:60px;background:#F81404;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+              <span style="font-size:9px;color:#fff;font-weight:700">移除</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 阿夾 breathing indicator -->
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">阿夾 Thinking Breath</div>
+        <div class="bot-msg" style="display:inline-flex;align-items:center;gap:10px;padding:10px 16px">
+          <div class="av av-32 av-bot" style="font-size:14px"><span class="bot-sparkle">✦</span></div>
+          <div style="display:flex;gap:5px;align-items:center">
+            <div style="width:7px;height:7px;background:#765BFF;border-radius:50%;animation:dotPulse 1.4s 0s ease-in-out infinite"></div>
+            <div style="width:7px;height:7px;background:#765BFF;border-radius:50%;animation:dotPulse 1.4s .25s ease-in-out infinite"></div>
+            <div style="width:7px;height:7px;background:#765BFF;border-radius:50%;animation:dotPulse 1.4s .50s ease-in-out infinite"></div>
+          </div>
+          <span style="font-size:11px;color:#9CA3AF">分析中…</span>
+        </div>
+        <div style="margin-top:8px;font-size:10px;color:#9CA3AF;line-height:1.6">3 dots · stagger 0 / 250 / 500ms delay<br>"Breathing" rhythm = 阿夾 在思考的感覺<br>Never spin — dots feel alive, spinners feel robotic</div>
+      </div>
+      <!-- inner glow detail -->
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:10px;color:#9CA3AF;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Inner Light — Surface Sheen</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="position:relative;height:44px;border-radius:12px;background:linear-gradient(135deg,#9580FF,#765BFF);overflow:hidden;box-shadow:0 6px 16px rgba(118,91,255,.4)">
+            <!-- top-left inner light catch -->
+            <div style="position:absolute;top:-20%;left:-10%;width:55%;height:55%;background:radial-gradient(circle,rgba(255,255,255,.45),transparent 70%);pointer-events:none"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff">radial inner light ↖</div>
+          </div>
+          <div style="position:relative;height:44px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,.06);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,1),0 1px 3px rgba(0,0,0,.06)">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#777">inset top highlight — white card</div>
+          </div>
+        </div>
+        <div style="margin-top:6px;font-size:10px;color:#9CA3AF;line-height:1.5">Every colored surface has a radial top-left catch light. White surfaces get <code style="background:#F2F2F2;padding:1px 3px;border-radius:2px">inset 0 1px 0 #fff</code>.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- === TOKENS === -->
 <div class="sec-header anchor" id="tokens" style="margin-top:48px">
   <h2>Design Tokens</h2>
