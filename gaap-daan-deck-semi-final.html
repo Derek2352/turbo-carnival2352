@@ -44,12 +44,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","
 /* ── slide stage / scaling ── */
 .deck{padding:40px 0 80px}
 .stage{width:calc(1920px*var(--scale));height:calc(1080px*var(--scale));margin:0 auto 40px;position:relative}
-.slide{position:absolute;top:0;left:0;width:1920px;height:1080px;transform:scale(var(--scale));transform-origin:top left;background:#fff;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden;padding:96px;display:flex;flex-direction:column}
+.slide{position:absolute;top:0;left:0;width:1920px;height:1080px;transform:scale(var(--scale));transform-origin:top left;background:#fff;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden;padding:104px 124px;display:flex;flex-direction:column}
 .slide.dark{background:linear-gradient(160deg,#2A1F5C 0%,#5A45D9 60%,#765BFF 100%);color:#fff}
 .slide.lav{background:linear-gradient(150deg,#F4F2F8 0%,#ECE7FF 60%,#E2D9FF 100%)}
-.s-num{position:absolute;top:48px;right:56px;font-size:18px;font-weight:700;color:var(--t2);letter-spacing:.05em}
+.s-num{position:absolute;top:56px;right:68px;font-size:18px;font-weight:700;color:var(--t2);letter-spacing:.05em}
 .slide.dark .s-num{color:rgba(255,255,255,.6)}
-.s-badge{position:absolute;top:48px;left:56px;font-size:16px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--p)}
+.s-badge{position:absolute;top:56px;left:68px;font-size:16px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--p)}
 .slide.dark .s-badge{color:#C9BBFF}
 
 /* ── type ── */
@@ -59,8 +59,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","
 .h1{font-size:96px;font-weight:800;line-height:1.04}
 .h2{font-size:72px;font-weight:800;line-height:1.06}
 .h3{font-size:48px;font-weight:700;line-height:1.1}
-.lead{font-size:36px;font-weight:500;line-height:1.4}
-.body{font-size:24px;line-height:1.5;color:var(--t1)}
+.lead{font-size:36px;font-weight:500;line-height:1.5}
+.body{font-size:24px;line-height:1.6;color:var(--t1)}
 .cap{font-size:18px;line-height:1.5;color:var(--t2)}
 .muted{color:var(--t2)}
 
@@ -71,15 +71,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","
 .deco{position:absolute;color:rgba(255,255,255,.5);animation:drift 6s ease-in-out infinite}
 
 /* ── reusable blocks ── */
-.qcard{background:#fff;border:1px solid var(--pl);border-left:5px solid var(--p);border-radius:14px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-.qcard .qt{font-size:25px;line-height:1.45;font-weight:500;color:var(--t1)}
+.qcard{background:#fff;border:1px solid var(--pl);border-left:5px solid var(--p);border-radius:14px;padding:24px 30px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.qcard .qt{font-size:25px;line-height:1.55;font-weight:500;color:var(--t1)}
 .qcard .qs{font-size:17px;color:var(--t2);margin-top:10px;font-weight:600}
 .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--pl);border-radius:30px;padding:12px 22px;font-size:22px;font-weight:600;color:var(--t1)}
 .chip-p{background:var(--p);color:#fff;border-color:var(--p)}
 .arrow{color:var(--p);font-size:40px;font-weight:700}
-.col-card{background:#fff;border:1.5px solid #ECECF4;border-radius:20px;padding:30px;flex:1;box-shadow:0 6px 24px rgba(0,0,0,.05)}
+.col-card{background:#fff;border:1.5px solid #ECECF4;border-radius:20px;padding:34px 36px;flex:1;box-shadow:0 6px 24px rgba(0,0,0,.05)}
 .col-card.accent{background:linear-gradient(160deg,#7C63FF,#5A45D9);color:#fff;border:none;box-shadow:0 16px 44px rgba(118,91,255,.4)}
-.feat{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:500;padding:9px 0}
+.feat{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:500;padding:11px 0}
 .htag{display:inline-flex;align-items:center;gap:7px;background:#FFF4E5;border:1px solid #FFD8A8;color:#B45309;font-size:16px;font-weight:700;padding:6px 12px;border-radius:8px}
 .priv{display:inline-flex;align-items:center;gap:10px;background:rgba(0,200,83,.12);border:1px solid rgba(0,200,83,.5);color:#0A7A3D;font-size:21px;font-weight:700;padding:12px 20px;border-radius:30px}
 .slide.dark .priv,.col-card.accent .priv{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:#fff}
@@ -92,8 +92,8 @@ table.cmp tr.win td{background:#F3EFFF;font-weight:700}
 .yes{color:var(--ok);font-weight:800;font-size:26px}
 .no{color:#C0392B;font-weight:800;font-size:24px}
 .par{color:#E08A00;font-weight:800;font-size:24px}
-.trace td{border-bottom:1px solid #ECECF4;padding:20px 22px;vertical-align:top;font-size:21px;line-height:1.45}
-.trace th{text-align:left;padding:16px 22px;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--p);border-bottom:2px solid var(--pl)}
+.trace td{border-bottom:1px solid #ECECF4;padding:18px 28px;vertical-align:top;font-size:21px;line-height:1.5}
+.trace th{text-align:left;padding:16px 28px;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--p);border-bottom:2px solid var(--pl)}
 .trace tr:last-child td{border-bottom:none}
 .trace .ans{color:var(--pd);font-weight:700}
 .concept-tag{font-size:18px;font-style:italic;color:var(--t2)}
