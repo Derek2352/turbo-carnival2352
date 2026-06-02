@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlipayHK 夾單 — Semi-Final Deck</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#765BFF; --pd:#5A45D9; --pl:#ECE7FF; --lav:#F4F2F8;
+  --ok:#00C853; --warn:#F44336; --t1:#1A1A1A; --t2:#6B7280;
+  --scale:1;
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans HK","Helvetica Neue",sans-serif;background:#2A2A30;color:var(--t1);-webkit-font-smoothing:antialiased}
+.disp{font-family:"Noto Sans HK",-apple-system,sans-serif}
+.tnum{font-variant-numeric:tabular-nums}
+
+@keyframes botPulse{0%,100%{transform:scale(1) rotate(0deg);opacity:1}50%{transform:scale(1.18) rotate(8deg);opacity:.85}}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes dashMove{to{stroke-dashoffset:-12}}
+.spark{display:inline-block;animation:botPulse 2.4s ease-in-out infinite}
+.dashed-anim{stroke-dasharray:6 4;animation:dashMove 1s linear infinite}
+
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:50;height:64px;background:rgba(26,26,26,.92);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-brand{color:#fff;font-weight:800;font-size:18px;letter-spacing:.01em}
+.nav-brand span{color:#A795FF}
+.pills{display:flex;gap:10px;align-items:center}
+.pill{font-size:14px;font-weight:600;padding:8px 16px;border-radius:20px;text-decoration:none;transition:all .15s;white-space:nowrap}
+.pill-ghost{color:#9CA3AF}.pill-ghost:hover{color:#fff}
+.pill-on{background:var(--p);color:#fff}
+.pill-out{border:1.5px solid rgba(255,255,255,.35);color:#fff}
+.pill-out:hover{background:rgba(255,255,255,.1)}
+
+/* ── divider banner ── */
+.divider{width:100%;min-height:300px;background:linear-gradient(120deg,#2A1F5C 0%,#5A45D9 60%,#765BFF 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;padding:48px;position:relative;overflow:hidden}
+.divider h2{font-size:64px;font-weight:800;letter-spacing:.02em}
+.divider p{font-size:24px;opacity:.85;margin-top:10px;letter-spacing:.18em;text-transform:uppercase}
+
+/* ── slide stage / scaling ── */
+.deck{padding:40px 0 80px}
+.stage{width:calc(1920px*var(--scale));height:calc(1080px*var(--scale));margin:0 auto 40px;position:relative}
+.slide{position:absolute;top:0;left:0;width:1920px;height:1080px;transform:scale(var(--scale));transform-origin:top left;background:#fff;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden;padding:96px;display:flex;flex-direction:column}
+.slide.dark{background:linear-gradient(160deg,#2A1F5C 0%,#5A45D9 60%,#765BFF 100%);color:#fff}
+.slide.lav{background:linear-gradient(150deg,#F4F2F8 0%,#ECE7FF 60%,#E2D9FF 100%)}
+.s-num{position:absolute;top:48px;right:56px;font-size:18px;font-weight:700;color:var(--t2);letter-spacing:.05em}
+.slide.dark .s-num{color:rgba(255,255,255,.6)}
+.s-badge{position:absolute;top:48px;left:56px;font-size:16px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--p)}
+.slide.dark .s-badge{color:#C9BBFF}
+
+/* ── type ── */
+.eyebrow{font-size:18px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--p)}
+.slide.dark .eyebrow{color:#C9BBFF}
+.hero{font-size:144px;font-weight:800;line-height:1;letter-spacing:.02em}
+.h1{font-size:96px;font-weight:800;line-height:1.04}
+.h2{font-size:72px;font-weight:800;line-height:1.06}
+.h3{font-size:48px;font-weight:700;line-height:1.1}
+.lead{font-size:36px;font-weight:500;line-height:1.4}
+.body{font-size:24px;line-height:1.5;color:var(--t1)}
+.cap{font-size:18px;line-height:1.5;color:var(--t2)}
+.muted{color:var(--t2)}
+
+/* ── avatar / sparkle ── */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0;position:relative}
+.av-bot{background:linear-gradient(135deg,#765BFF 0%,#5A45D9 60%,#9580FF 100%);position:relative;overflow:hidden;box-shadow:0 12px 40px rgba(118,91,255,.4)}
+.av-bot::after{content:"";position:absolute;top:-30%;left:-30%;width:60%;height:60%;background:radial-gradient(circle,rgba(255,255,255,.6),transparent 70%);opacity:.7}
+.deco{position:absolute;color:rgba(255,255,255,.5);animation:drift 6s ease-in-out infinite}
+
+/* ── reusable blocks ── */
+.qcard{background:#fff;border:1px solid var(--pl);border-left:5px solid var(--p);border-radius:14px;padding:22px 26px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.qcard .qt{font-size:25px;line-height:1.45;font-weight:500;color:var(--t1)}
+.qcard .qs{font-size:17px;color:var(--t2);margin-top:10px;font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--pl);border-radius:30px;padding:12px 22px;font-size:22px;font-weight:600;color:var(--t1)}
+.chip-p{background:var(--p);color:#fff;border-color:var(--p)}
+.arrow{color:var(--p);font-size:40px;font-weight:700}
+.col-card{background:#fff;border:1.5px solid #ECECF4;border-radius:20px;padding:30px;flex:1;box-shadow:0 6px 24px rgba(0,0,0,.05)}
+.col-card.accent{background:linear-gradient(160deg,#7C63FF,#5A45D9);color:#fff;border:none;box-shadow:0 16px 44px rgba(118,91,255,.4)}
+.feat{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:500;padding:9px 0}
+.htag{display:inline-flex;align-items:center;gap:7px;background:#FFF4E5;border:1px solid #FFD8A8;color:#B45309;font-size:16px;font-weight:700;padding:6px 12px;border-radius:8px}
+.priv{display:inline-flex;align-items:center;gap:10px;background:rgba(0,200,83,.12);border:1px solid rgba(0,200,83,.5);color:#0A7A3D;font-size:21px;font-weight:700;padding:12px 20px;border-radius:30px}
+.slide.dark .priv,.col-card.accent .priv{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.5);color:#fff}
+.coverage{display:inline-flex;align-items:center;gap:12px;background:#FFF4E5;border:1px solid #FFD8A8;color:#92400E;font-size:21px;font-weight:700;padding:14px 24px;border-radius:12px}
+table.cmp{border-collapse:collapse;width:100%;font-size:22px}
+table.cmp th,table.cmp td{border:1px solid #E5E1F0;padding:16px 18px;text-align:center}
+table.cmp th{background:var(--lav);font-weight:800;font-size:21px}
+table.cmp td.row-h{text-align:left;font-weight:700;background:#FBFAFE}
+table.cmp tr.win td{background:#F3EFFF;font-weight:700}
+.yes{color:var(--ok);font-weight:800;font-size:26px}
+.no{color:#C0392B;font-weight:800;font-size:24px}
+.par{color:#E08A00;font-weight:800;font-size:24px}
+.trace td{border-bottom:1px solid #ECECF4;padding:20px 22px;vertical-align:top;font-size:21px;line-height:1.45}
+.trace th{text-align:left;padding:16px 22px;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--p);border-bottom:2px solid var(--pl)}
+.trace tr:last-child td{border-bottom:none}
+.trace .ans{color:var(--pd);font-weight:700}
+.concept-tag{font-size:18px;font-style:italic;color:var(--t2)}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="nav-brand">AlipayHK · <span>夾單</span></div>
+  <div class="pills">
+    <a class="pill pill-ghost" href="#">Design System</a>
+    <a class="pill pill-on" href="gaap-daan-deck-semi-final.html">Semi-Final Deck</a>
+    <a class="pill pill-out" href="gaap-daan-deck-final.html">Final Deck</a>
+  </div>
+</div>
+<div class="divider"><div class="deco spark" style="top:18%;left:12%;font-size:40px;animation-delay:0s">✦</div><div class="deco spark" style="top:70%;left:8%;font-size:28px;animation-delay:1.2s">✦</div><div class="deco spark" style="top:28%;left:86%;font-size:34px;animation-delay:0.6s">✦</div><div class="deco spark" style="top:76%;left:90%;font-size:44px;animation-delay:1.8s">✦</div><div class="deco spark" style="top:48%;left:50%;font-size:22px;animation-delay:0.9s">✦</div><h2 class="disp">SEMI-FINAL · 3–5 MIN PITCH</h2><p>8 slides</p></div>
+<div class="deck"><div class="stage"><div class="slide dark">
+  <div class="s-badge">Cover</div><div class="s-num tnum">1 / 8</div>
+  <div class="deco spark" style="top:14%;left:10%;font-size:46px;animation-delay:0s">✦</div><div class="deco spark" style="top:72%;left:14%;font-size:30px;animation-delay:1.1s">✦</div><div class="deco spark" style="top:22%;left:82%;font-size:38px;animation-delay:0.5s">✦</div><div class="deco spark" style="top:80%;left:86%;font-size:52px;animation-delay:1.7s">✦</div><div class="deco spark" style="top:46%;left:90%;font-size:24px;animation-delay:0.9s">✦</div><div class="deco spark" style="top:58%;left:6%;font-size:22px;animation-delay:1.4s">✦</div>
+  <div style="margin:auto 0">
+    <div class="eyebrow" style="margin-bottom:28px">AlipayHK UX 設計比賽 2026</div>
+    <div class="hero disp" style="margin-bottom:30px">「夾單」</div>
+    <div style="font-size:34px;font-weight:500;opacity:.92;max-width:1180px;line-height:1.4">支付之後嘅嗰一層 —— 你個 group 嘅共享帳簿。</div>
+    <div style="font-size:21px;opacity:.7;margin-top:22px;letter-spacing:.04em">The shared-payment layer AlipayHK is missing.</div>
+  </div>
+  <div style="font-size:20px;opacity:.65;font-weight:600">Team [____]</div>
+</div></div>
+<div class="stage"><div class="slide ">
+  <div class="s-badge">The Pain</div><div class="s-num tnum">2 / 8</div>
+  <div class="eyebrow" style="margin-top:40px">The Problem</div>
+  <div style="margin:auto 0;max-width:1500px">
+    <div class="disp" style="font-size:64px;font-weight:800;line-height:1.28;color:var(--t1)">「AlipayHK QR 喺收銀機度成日 lag 一兩秒，我寧願用返 PayMe。」</div>
+    <div class="body muted" style="margin-top:30px;font-size:26px">— 嘉俊, Daily QR-Pay Resident · scraped from LIHKG · cluster of 10 similar users</div>
+  </div>
+  <div style="background:var(--lav);border-radius:16px;padding:30px 36px;font-size:30px;font-weight:600;line-height:1.5;color:var(--pd)">支付一刻，AlipayHK 輸俾 PayMe 同八達通。佢係用戶心目中『第三個掣』—— 用嘅時候 OK，但無理由要返嚟。</div>
+</div></div>
+<div class="stage"><div class="slide lav">
+  <div class="s-badge">The Reframe</div><div class="s-num tnum">3 / 8</div>
+  <div class="deco spark" style="top:20%;left:86%;font-size:30px;animation-delay:0.4s">✦</div><div class="deco spark" style="top:74%;left:90%;font-size:22px;animation-delay:1.2s">✦</div><div class="eyebrow" style="margin-top:40px">The Reframe</div>
+  <div style="display:flex;align-items:center;gap:64px;margin:auto 0">
+    <div style="flex:1">
+      <div class="disp" style="font-size:60px;font-weight:700;color:#9A93AD;text-decoration:line-through;text-decoration-color:#C7B8FF;line-height:1.2;margin-bottom:30px">夾單 ≠ 加 AI 落單一筆過嘅分帳</div>
+      <div class="disp" style="font-size:78px;font-weight:800;line-height:1.16;background:linear-gradient(120deg,#5A45D9,#765BFF);-webkit-background-clip:text;background-clip:text;color:transparent">夾單 ＝ 喺支付『之後』，留低一個共享、可信、搵得返嘅記錄</div>
+    </div>
+    <div style="flex-shrink:0;text-align:center">
+      <div class="av av-bot" style="width:200px;height:200px;font-size:96px;margin:0 auto"><span class="spark" style="position:relative;z-index:1">✦</span></div>
+      <div style="font-size:32px;font-weight:800;margin-top:26px">阿夾</div>
+      <div class="cap" style="font-size:21px;max-width:320px;margin-top:6px">幫你維持嗰個記錄嘅 AI 副駕</div>
+    </div>
+  </div>
+  <div style="font-size:23px;color:var(--pd);font-weight:600">唔同 PayMe 鬥快掃碼 —— 我哋贏喺『支付之後』，一個無人 own 嘅時刻。</div>
+</div></div>
+<div class="stage"><div class="slide ">
+  <div class="s-badge">Research Foundation</div><div class="s-num tnum">4 / 8</div>
+  <div class="eyebrow" style="margin-top:40px">Research Foundation</div>
+  <div class="disp" style="font-size:60px;font-weight:800;margin-top:14px">由公開討論，反推產品定義</div>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:46px 0"><div class="chip">LIHKG · Reddit · HK App Store</div><span class="arrow" style="font-size:34px">→</span><div class="chip">BGE-M3 embeddings</div><span class="arrow" style="font-size:34px">→</span><div class="chip">UMAP + HDBSCAN clustering</div><span class="arrow" style="font-size:34px">→</span><div class="chip">LLM 合成（每句 claim 都附 source）</div></div>
+  <div style="display:flex;gap:28px;margin-bottom:auto">
+    <div class="col-card" style="flex:1"><div class="disp" style="font-size:38px;font-weight:800;color:var(--p)">2 personas</div><div class="body" style="margin-top:8px">from clusters of <b class="tnum">18</b> and <b class="tnum">10</b> users</div></div>
+    <div class="col-card" style="flex:1"><div class="disp" style="font-size:38px;font-weight:800;color:var(--p)">every claim cites a scraped post</div><div class="body" style="margin-top:8px">mandatory <b>doc_id</b> behind every statement</div></div>
+  </div>
+  <div style="background:var(--lav);border-radius:14px;padding:26px 30px;display:flex;align-items:center;gap:26px;flex-wrap:wrap">
+    <span class="coverage">⚠ 「Coverage: limited — forums + app reviews only.」</span>
+    <span class="body" style="font-size:23px">We show only what the public data supports. — No QA / blogs / social / video; no Mainland sources by design.</span>
+  </div>
+</div></div>
+<div class="stage"><div class="slide ">
+  <div class="s-badge">Persona · 阿欣</div><div class="s-num tnum">5 / 8</div>
+  <div class="eyebrow" style="margin-top:40px">Persona · Hero</div>
+  <div style="display:flex;gap:56px;margin-top:30px;flex:1;align-items:flex-start">
+    <div style="width:520px;flex-shrink:0">
+      <div class="av av-bot" style="width:200px;height:200px;font-size:84px;background:linear-gradient(150deg,#E8E0FF,#C5B5FF);color:#5A45D9;box-shadow:0 0 0 10px var(--lav)"><span style="position:relative;z-index:1">阿</span></div>
+      <div class="disp" style="font-size:56px;font-weight:800;margin-top:28px">阿欣 · Cross-Border Shopper<span style="background:var(--p);color:#fff;font-size:16px;font-weight:800;padding:4px 12px;border-radius:8px;margin-left:14px">HERO</span></div>
+      <div class="body muted" style="margin-top:16px;font-size:24px">zh-HK · 28–42 · 白領／freelance designer／online seller · HK</div>
+      <div style="display:flex;gap:14px;margin-top:26px">
+        <div class="chip chip-p tnum">cluster 18</div>
+        <div class="chip tnum">confidence 0.76</div>
+      </div>
+    </div>
+    <div style="flex:1"><div class="qcard" style="margin-bottom:16px"><div class="qt">「用 AlipayHK 畀錢去淘寶，突然彈出要做 KYC，結個單就 cancel 咗，又要重頭嚟過。」</div><div class="qs">— 阿欣 · LIHKG</div></div><div class="qcard" style="margin-bottom:16px"><div class="qt">"Daily cap on AlipayHK is way too low — single Taobao order over HKD 5,000 gets blocked without a clear reason."</div><div class="qs">— 阿欣 · Reddit</div></div><div class="qcard" style="margin-bottom:16px"><div class="qt">「個 app 一掃支付寶 QR 就閃退，iOS 17 之後仲嚴重。」</div><div class="qs">— 阿欣 · HK App Store</div></div></div>
+  </div>
+  <div style="background:var(--lav);border-radius:14px;padding:24px 30px;font-size:26px;font-weight:600;color:var(--pd)">核心張力：想要一個可信嘅記錄，但 app 只係幫你『畀完』就算。</div>
+</div></div>
+<div class="stage"><div class="slide ">
+  <div class="s-badge">Product · One Diagram</div><div class="s-num tnum">6 / 8</div>
+  <div class="eyebrow" style="margin-top:40px">Product · One Diagram</div>
+  <div class="disp" style="font-size:60px;font-weight:800;margin-top:14px">兩個功能 · 一個 AI 朋友</div>
+  <div style="display:flex;align-items:stretch;gap:24px;margin:auto 0;width:100%">
+    <div class="col-card">
+      <div class="disp" style="font-size:42px;font-weight:800">夾單 <span class="muted" style="font-size:24px;font-weight:600">Split</span></div>
+      <div style="margin-top:18px"><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>拍單分賬</div><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>Tap-to-Claim</div><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>對話式分單</div></div>
+      <div style="margin-top:16px"><span class="htag">設計假設 · 食物相 OCR／口味記憶 · 設計假設・待訪談驗證</span></div>
+    </div>
+    <div style="display:flex;align-items:center"><span class="arrow">→</span></div>
+    <div class="col-card accent">
+      <div style="display:flex;align-items:center;gap:14px"><div class="av av-bot" style="width:64px;height:64px;font-size:30px"><span class="spark" style="position:relative;z-index:1">✦</span></div><div class="disp" style="font-size:42px;font-weight:800">阿夾</div></div>
+      <div style="margin-top:18px"><div class="feat"><span style="color:#fff;font-size:22px">●</span>✦ 主動推斷</div><div class="feat"><span style="color:#fff;font-size:22px">●</span>公平度報告</div><div class="feat"><span style="color:#fff;font-size:22px">●</span>爭議調解</div><div class="feat"><span style="color:#fff;font-size:22px">●</span>異常偵測</div></div>
+      <div style="margin-top:20px"><span class="priv">🔒 永遠唔自動扣錢</span></div>
+    </div>
+    <div style="display:flex;align-items:center"><span class="arrow">←</span></div>
+    <div class="col-card">
+      <div class="disp" style="font-size:42px;font-weight:800">後數 <span class="muted" style="font-size:24px;font-weight:600">Ledger</span></div>
+      <div style="margin-top:18px"><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>持久 group 帳簿</div><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>圖論最少筆數結算</div><div class="feat"><span style="color:var(--ok);font-size:22px">●</span>一鍵後數</div></div>
+    </div>
+  </div>
+  <div class="body" style="font-size:28px;font-weight:600;color:var(--t1)">分單只係 <b style="color:var(--p)">1%</b>。其餘 99% 係維繫你個 group 嘅財務記錄。</div>
+</div></div>
+<div class="stage"><div class="slide lav">
+  <div class="s-badge">Killer Moment</div><div class="s-num tnum">7 / 8</div>
+  <div class="eyebrow" style="margin-top:40px">The Breakthrough · 產品概念</div>
+  <div class="disp" style="font-size:50px;font-weight:800;margin-top:14px">用 graph theory，將 6 筆轉帳壓縮成 2 筆</div>
+  <div style="display:flex;align-items:center;gap:30px;margin:auto 0;width:100%">
+    <div style="flex:1;text-align:center">
+      <svg viewBox="0 0 540 510" style="width:100%;max-width:520px"><defs></defs><line class="dashed-anim" x1="120" y1="90" x2="420" y2="90" stroke="#F44336" stroke-width="3"/><line class="dashed-anim" x1="120" y1="90" x2="120" y2="420" stroke="#F44336" stroke-width="3"/><line class="dashed-anim" x1="120" y1="90" x2="420" y2="420" stroke="#F44336" stroke-width="3"/><line class="dashed-anim" x1="420" y1="90" x2="120" y2="420" stroke="#F44336" stroke-width="3"/><line class="dashed-anim" x1="420" y1="90" x2="420" y2="420" stroke="#F44336" stroke-width="3"/><line class="dashed-anim" x1="120" y1="420" x2="420" y2="420" stroke="#F44336" stroke-width="3"/><circle cx="120" cy="90" r="34" fill="#F97316"/><text x="120" y="98" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">K</text><circle cx="420" cy="90" r="34" fill="#8B5CF6"/><text x="420" y="98" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">M</text><circle cx="120" cy="420" r="34" fill="#EC4899"/><text x="120" y="428" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">Y</text><circle cx="420" cy="420" r="34" fill="#10B981"/><text x="420" y="428" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">L</text></svg>
+      <div style="font-size:28px;font-weight:800;color:#F44336;margin-top:10px">6 筆交易</div>
+    </div>
+    <div style="text-align:center;flex-shrink:0">
+      <div class="av av-bot" style="width:120px;height:120px;font-size:54px;margin:0 auto"><span class="spark" style="position:relative;z-index:1">✦</span></div>
+      <div style="font-size:26px;font-weight:800;color:var(--p);margin-top:14px">已優化</div>
+      <div class="arrow" style="font-size:60px">→</div>
+    </div>
+    <div style="flex:1;text-align:center">
+      <svg viewBox="0 0 540 510" style="width:100%;max-width:520px"><defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#00C853"/></marker></defs><line x1="420" y1="90" x2="120" y2="90" stroke="#00C853" stroke-width="5" marker-end="url(#ah)"/><line x1="420" y1="420" x2="120" y2="420" stroke="#00C853" stroke-width="5" marker-end="url(#ah)"/><circle cx="120" cy="90" r="34" fill="#F97316"/><text x="120" y="98" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">K</text><circle cx="420" cy="90" r="34" fill="#8B5CF6"/><text x="420" y="98" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">M</text><circle cx="120" cy="420" r="34" fill="#EC4899"/><text x="120" y="428" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">Y</text><circle cx="420" cy="420" r="34" fill="#10B981"/><text x="420" y="428" text-anchor="middle" font-size="26" font-weight="800" fill="#fff">L</text></svg>
+      <div style="font-size:28px;font-weight:800;color:var(--ok);margin-top:10px">2 筆轉帳</div>
+    </div>
+  </div>
+  <div class="concept-tag">Design concept — not a research finding.</div>
+</div></div>
+<div class="stage"><div class="slide dark">
+  <div class="s-badge">The Close</div><div class="s-num tnum">8 / 8</div>
+  <div class="deco spark" style="top:16%;left:12%;font-size:40px;animation-delay:0s">✦</div><div class="deco spark" style="top:78%;left:12%;font-size:28px;animation-delay:1.1s">✦</div><div class="deco spark" style="top:24%;left:84%;font-size:34px;animation-delay:0.6s">✦</div><div class="deco spark" style="top:80%;left:88%;font-size:46px;animation-delay:1.6s">✦</div>
+  <div style="margin:auto 0">
+    <div class="disp" style="font-size:82px;font-weight:800;line-height:1.22">
+      <div style="opacity:.85">AlipayHK has 1M+ HK wallets.</div>
+      <div style="opacity:.85">None of them keep a shared record after you pay.</div>
+      <div style="margin-top:18px">Until <span style="color:#E9E2FF">夾單</span>.</div>
+    </div>
+    <div style="font-size:32px;font-weight:600;margin-top:42px;opacity:.92;max-width:1300px;line-height:1.4">持久 group ledger × native AlipayHK 支付 —— 無 HK 競品同時做到。</div>
+  </div>
+  <div style="font-size:22px;opacity:.7;font-weight:600">Thank you · Q&amp;A</div>
+</div></div>
+</div><script>
+// fit 1920×1080 slides to the viewport width
+function fit(){var s=Math.min(1,(window.innerWidth-72)/1920);document.documentElement.style.setProperty('--scale',s);}
+window.addEventListener('resize',fit);fit();
+// arrow-key slide navigation
+var stages=[].slice.call(document.querySelectorAll('.stage'));var idx=0;
+function go(n){idx=Math.max(0,Math.min(stages.length-1,n));stages[idx].scrollIntoView({behavior:'smooth',block:'center'});}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){go(idx+1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){go(idx-1);e.preventDefault();}
+});
+// keep idx synced with whatever slide is centered on manual scroll
+var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){idx=stages.indexOf(en.target);}});},{threshold:.6});
+stages.forEach(function(s){io.observe(s);});
+</script>
+</body></html>
